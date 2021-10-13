@@ -1,3 +1,4 @@
+from typing import Any
 from flask import Flask, render_template, blueprints, request, redirect, url_for
 main= blueprints.Blueprint('main', __name__)
 
@@ -7,10 +8,20 @@ def home():
     """
     return render_template('index.html')
 
-@main.route( '/login/' )
+@main.route( '/login/', methods = ['GET','POST'])
 def login():
     """Función que maneja la página de login y registro.
     """
+    if request.method == 'POST':
+        if request.form.get("iniciosesion"):
+            if (request.form['username'] == 'usuario1') & (request.form['password'] == "prueba1"):
+                return render_template('profile.html')
+        elif request.form.get("registrate"):
+            if (request.form["form-usuario"] != "") | (request.form["form-password"]!= ""):
+                newuser = request.form["form-usuario"]
+                newpass = request.form["form-password"]
+                return newuser +" "+ newpass
+
     return render_template('login.html')
 
 @main.route( '/prueba/' )
