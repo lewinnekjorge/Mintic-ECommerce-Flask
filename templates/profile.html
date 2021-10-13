@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block cuerpo %}
+
+<div class="container-fluid d-flex justify-content-center bg-light" style= "padding:5%">
+    <div class="cardprofile">
+        <div class="container">
+            <div class = "row" style="text-align: center;">
+                <div class="col">
+                    <h1 style="padding-bottom: 5%;"><h1>
+                    <h1>Perfil</h1>
+                </div>
+                <div class="col">
+                    <input class="form-control bg-light" type="text" id= "nombre" placeholder="Jameson Gutierrez" disabled>
+                    <input class="form-control bg-light" type="text" id= "username" placeholder="jgutierrez" disabled>
+                    <button type="button" class="btn btn-secondary" onclick="desbloqueo()">Editar</button>
+                    <button type="button" class="btn btn-secondary" onclick="guardar()">Guardar</button>
+                </div>
+            </div>
+        </div>
+        <div class="container mt-3 p-2">
+            <div class = "row" style="text-align: center;">
+                <div class="col">
+                    <h1>Balance</h1>
+                  </div>
+                <div class="col">
+                    <h1 style="padding-bottom:0.5%;"></h1>
+                  <h5 class="name" style="font-size: large;">$150.000</h5>
+                </div>
+            </div>
+        </div>
+        <div class="container mt-3 p-2">
+            <div class = "row" style="text-align: center;">
+                <div class="col">
+                    <h1>Reviews</h1>
+                  </div>
+                <div class="col">
+                    <h1 style="padding-bottom:0.5%;"></h1>
+                  <h5 class="name" style="font-size: large ;"><a href="#">Ver</a></h5>
+                </div>
+            </div>
+        </div>
+        <div class="container mt-3 p-2">
+            <div class = "row" style="text-align: center;">
+                <div class="col">
+                    <h1>Lista de Deseos</h1>
+                  </div>
+                <div class="col">
+                    <h1 style="padding-bottom:0.5%;"></h1>
+                  <h5 class="name" style="font-size: large ;"><a href="#">Ver</a></h5>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

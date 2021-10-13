@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+
+{% block cuerpo %}
+    <section class = "todo">
+    <div class = "container" style="background-color: white; width: auto;">
+            <div class="row">
+                <div class="col-md-5">
+                        <div class="form-top">
+                            <div class="form-top-left" style="padding: 5%;">
+                                <h3 style=>Inicia Sesión</h3>
+                                <p style="text-align: center;">Ingresa Usuario y Contraseña</p>
+                            </div>
+                            <!--<div class="form-top-right">
+                                <i class="fa fa-key"></i>
+                            </div>-->
+                        </div>
+                        <div class="form-bottom" style="padding-left: 10%; padding-right: 10%;">
+                            <form role="form" action="" method="post" class="login-form">
+                                <div class="form-group" style="padding-bottom:5%">
+                                    <label for="form-username" style="padding-bottom:1%">Usuario</label>
+                                    <input type="text" name="form-username" placeholder="Usuario..." class="form-control" id="form-username">
+                                </div>
+                                <div class="form-group">
+                                    <label for="form-password" style="padding-bottom:1%">Contraseña</label>
+                                    <input type="password" name="form-password" placeholder="Contraseña..." class="form-control" id="form-password">
+                                </div>
+                                <div class="d-grid gap-2" style= "padding-top: 10%">
+                                <button type="submit" class="btn btn-secondary">INICIAR SESIÓN</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+<!-------------------------------------------- Finaliza Primera Form--------------------------------------------------------->
+
+                    <div class="col-md-1 middle-border" style="background-color:rgb(67,67,67) ;"></div>
+<!-------------------------------------------- Espacio en el centro---------------------------------------------------------->                        	
+                    <div class="col-md-5">                     	
+                        		<div class="form-top">
+	                        		<div class="form-top-left" style="padding: 5%; padding-bottom: 2%;">
+	                        			<h3>Regístrate Ahora!</h3>
+	                            		<p style="text-align: center;">Ingresa los datos</p>
+	                        		</div>
+	                            </div>
+	                            <div class="form-bottom" style="padding-left: 10%; padding-right: 10%;">
+				                    <form role="form" action="" method="post" class="registration-form">
+				                    	<div class="form-group">
+				                    		<label for="form-first-name" style="padding-bottom:1%">Nombre</label>
+				                        	<input type="text" name="form-first-name" placeholder="Nombre..." class="form-control" id="formname">
+				                        </div>
+				                        <div class="form-group">
+				                        	<label for="form-last-name" style="padding-bottom:1%; padding-top: 2%;">Usuario</label>
+				                        	<input type="text" name="form-last-name" placeholder="Usuario..." class="form-control" id="formuser">
+				                        </div>
+				                        <div class="form-group">
+				                        	<label for="form-password" style="padding-bottom:1%; padding-top: 2%;">Contraseña</label>
+				                        	<input type="password" name="form-password" placeholder="Contraseña..." class="form-control" id="formpass">
+				                        </div>
+				                        <div class="form-group">
+				                        	<label for="form-password" style="padding-bottom:1%; padding-top: 2%;">Confirme su Contraseña</label>
+				                        	<input type="password" name="form-password" placeholder="Contraseña..." class="form-control" id="formconficlave">
+				                        </div>
+                                        <div class="d-grid gap-2" style= "padding-top: 10%; padding-bottom: 10%;">
+                                        <button type="submit" id = registrate class="btn btn-secondary">REGISTRATE</button>
+                                        </div>
+				                    </form>
+			                    </div>                        	
+                    </div>
+                    <!--------Espacio al Final-------->
+                    <div class="col-md-1 middle-border" style="background-color:rgb(67,67,67) ;"></div>
+
+            </div>
+        </div>
+    </section>
+    {% endblock %}
