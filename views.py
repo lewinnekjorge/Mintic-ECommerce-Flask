@@ -26,7 +26,7 @@ def cart():
 
     """
 
-    return render_template('shoppingcart2.html')
+    return render_template('shoppingcart.html')
 
 @main.route( '/contacto/' )
 def contacto():
