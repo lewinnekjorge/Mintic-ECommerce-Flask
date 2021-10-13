@@ -7,7 +7,7 @@ def home():
     """
     return render_template('index.html')
 
-@main.route( '/login/' )
+@main.route( '/login2/' )
 def login():
     """Función que maneja la página de login y registro.
     """
