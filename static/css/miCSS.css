@@ -1,6 +1,7 @@
 .alineaizquierda{
     text-align: left;
 }
+
 h3{
     text-align: center;
 }
@@ -67,15 +68,19 @@ footer{
 .btn-secondary{
     background-color: rgb(85, 85, 85);
 }
+.profiletitles{
+    font-family: cursive;
+    font-weight: bold;
+}
 
-
-
-
-
+.bacimg{
+    background-image:url('/static/img/wallcom.jpg');
+    background-size: 1550px;
+}
 .cardprofile {
     background-color: #fff;
-    width: 50%;
-    height: 100%;
+    width: 40%;
+    height:auto;
     border-radius: 33px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     padding: 2rem !important
