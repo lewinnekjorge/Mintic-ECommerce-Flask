@@ -32,6 +32,11 @@ footer{
     padding: 0.5%;
     width:100%;
 }
+
+.newflex{
+    display:flex;
+    
+}
 .flexing{
     display: flex;
     flex-wrap: wrap;

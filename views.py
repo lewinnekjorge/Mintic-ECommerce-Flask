@@ -29,12 +29,12 @@ def login():
 
 
 
-@main.route( '/prueba/', methods = ['GET','POST'])
-def prueba():
-    """Función de prueba.
+@main.route( '/productos/', methods = ['GET','POST'])
+def product():
+    """Función de producto.
     """
 
-    return render_template('prueba.html')
+    return render_template('product.html')
 
 @main.route( '/cart/', methods = ['GET','POST'])
 def cart():
