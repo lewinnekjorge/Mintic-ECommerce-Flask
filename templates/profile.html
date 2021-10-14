@@ -1,18 +1,19 @@
 {% extends 'base.html' %}
 
 {% block cuerpo %}
-
-<div class="container-fluid d-flex justify-content-center bg-light" style= "padding:5%">
-    <div class="cardprofile">
-        <div class="container">
+<div class="container-fluid d-flex justify-content-center bacimg" style= "padding:5%;">
+    <div class="cardprofile bg-light">
+        <div class="container container mt-3 p-2">
             <div class = "row" style="text-align: center;">
                 <div class="col">
                     <h1 style="padding-bottom: 5%;"><h1>
-                    <h1>Perfil</h1>
+                    <h2 class = "profiletitles">Perfil:</h2>
                 </div>
                 <div class="col">
                     <input class="form-control bg-light" type="text" id= "nombre" placeholder="Jameson Gutierrez" disabled>
+                    <p></p>
                     <input class="form-control bg-light" type="text" id= "username" placeholder="jgutierrez" disabled>
+                    <p></p>
                     <button type="button" class="btn btn-secondary" onclick="desbloqueo()">Editar</button>
                     <button type="button" class="btn btn-secondary" onclick="guardar()">Guardar</button>
                 </div>
@@ -21,33 +22,35 @@
         <div class="container mt-3 p-2">
             <div class = "row" style="text-align: center;">
                 <div class="col">
-                    <h1>Balance</h1>
+                    <h2 class = "profiletitles">Balance:</h2>
                   </div>
                 <div class="col">
-                    <h1 style="padding-bottom:0.5%;"></h1>
-                  <h5 class="name" style="font-size: large;">$150.000</h5>
+                    <h1 style="padding-bottom:0%;"></h1>
+                  <h5 class="name" style="font-size: large;">
+                    <img class = "img-fluid" style= "width:10%" src= "{{ url_for('static', filename='img/wallet.png') }}">$150.000</h5>
                 </div>
             </div>
         </div>
         <div class="container mt-3 p-2">
             <div class = "row" style="text-align: center;">
                 <div class="col">
-                    <h1>Reviews</h1>
+                    <h2></h2>
+                    <h2 class = "profiletitles" style="padding-top: 5%;">Reviews:</h2>
                   </div>
                 <div class="col">
-                    <h1 style="padding-bottom:0.5%;"></h1>
-                  <h5 class="name" style="font-size: large ;"><a href="#">Ver</a></h5>
+                    <h1 style="padding-bottom:0%;"></h1>
+                  <h5 class="name" style="font-size: large ;"><a href="#"><img class = "img-fluid" style= "width:20%" src= "{{ url_for('static', filename='img/rating.png') }}"></a></h5>
                 </div>
             </div>
         </div>
         <div class="container mt-3 p-2">
             <div class = "row" style="text-align: center;">
                 <div class="col">
-                    <h1>Lista de Deseos</h1>
+                    <h2 class = "profiletitles">Lista de Deseos:</h2>
                   </div>
                 <div class="col">
                     <h1 style="padding-bottom:0.5%;"></h1>
-                  <h5 class="name" style="font-size: large ;"><a href="{{url_for('main.wish')}}">Ver</a></h5>
+                  <h5 class="name" style="font-size: large ;"><a href="{{url_for('main.wish')}}"><a href="#"><img class = "img-fluid" style= "width:20%" src= "{{ url_for('static', filename='img/wishlist.png') }}"></a></a></h5>
                 </div>
             </div>
         </div>
