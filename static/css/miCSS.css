@@ -44,9 +44,7 @@ footer{
     height: 20vw;
     object-fit: cover;
 }
-.card{
 
-}
 .card-title{
     text-align: center;
     font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
@@ -193,4 +191,23 @@ footer{
 
 .fashion-studio-border:hover {
     border-bottom: 1px solid #dee2e6 !important
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    /* background-color: #2196F3; */
+    padding: 10px;
+}
+
+.grid-item {
+    /* background-color: rgba(255, 255, 255, 0.8); */
+    /* border: 1px solid rgba(0, 0, 0, 0.8); */
+    padding: 20px;
+    font-size: 10px;
+    text-align: center;
+}
+
+.checked {
+    color: orange;
 }
