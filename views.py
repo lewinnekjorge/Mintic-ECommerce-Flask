@@ -61,7 +61,7 @@ def profile():
 
 @main.route( '/wish/', methods = ['GET','POST'])
 def wish():
-    """Función que maneja la lista de deseos.
+    """Función que maneja la lista de deseos
 
     """
 
