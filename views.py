@@ -27,6 +27,8 @@ def login():
 
     return render_template('login.html')
 
+
+
 @main.route( '/prueba/', methods = ['GET','POST'])
 def prueba():
     """Función de prueba.
@@ -64,3 +66,10 @@ def wish():
     """
 
     return render_template('wishlist.html')
+
+@main.route( '/calificacion/', methods = ['GET','POST'])
+def calificacion():
+    """Función de prueba.
+    """
+
+    return render_template('calificaciones.html')
