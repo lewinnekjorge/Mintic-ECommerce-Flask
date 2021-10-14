@@ -18,7 +18,7 @@ def login():
     if request.method == 'POST':
         if request.form.get("iniciosesion"):
             if (request.form['username'] == 'usuario1') & (request.form['password'] == "prueba1"):
-                return render_template('profile.html')
+                return redirect(url_for('main.profile'))
         elif request.form.get("registrate"):
             if (request.form["form-usuario"] != "") | (request.form["form-password"]!= ""):
                 newuser = request.form["form-usuario"]
