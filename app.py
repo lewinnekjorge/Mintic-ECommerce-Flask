@@ -5,7 +5,7 @@ def create_app():
     """
     app = Flask(__name__)
 
-    app.secret_key = 'misiontic2022'
+    app.secret_key = 'topsecret'
 
     from views import main
     app.register_blueprint(main)

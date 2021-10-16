@@ -1,10 +1,22 @@
-from flask import Flask, render_template, blueprints, request, redirect, url_for
+import functools
+from os import error
+from flask import Flask, render_template, blueprints, request, redirect, url_for, session, flash
 from formularios import *
 from werkzeug.security import check_password_hash, generate_password_hash
 from db import get_db
 from markupsafe import escape
 
 main= blueprints.Blueprint('main', __name__)
+
+def login_required(view):
+
+    @functools.wraps(view)
+    def wraped_view(**kwargs):
+        if 'usuario' not in session:
+            return redirect(url_for('main.login'))
+        return view(**kwargs)
+    
+    return wraped_view
 
 @main.route( '/' , methods = ['GET','POST'])
 def home():
@@ -22,26 +34,40 @@ def login():
         if request.form.get("enviar"): #Si el submit se activa con el botón de Iniciar Sesión
             logusuario = request.form['logusuario']
             logclave = request.form['logclave']
-
-            if (logusuario == 'usuario1') & (logclave == "prueba1"):
-                return redirect(url_for('main.profile'))
-
+            db = get_db()
+            consultabd = db.execute('select * from usuario where usuario = ?',(logusuario,)).fetchone()
+            db.commit()
+            db.close()
+            sw = False
+            if consultabd != None:
+                logclave = logclave + logusuario #salt agregada
+                sw = check_password_hash(consultabd[2], logclave)
+                if (sw) == True:
+                    session['usuario'] = consultabd[0]
+                    session['nombre'] = consultabd[1]
+                    session['tipousuario'] = consultabd[3]
+                    session['boologeado'] = True
+                    return redirect(url_for('main.profile')) 
         
         elif request.form.get("registrarse"): #Si el submit se activa con el botón de Registrarse
                 regnombre = escape(request.form["regnombre"])
                 regusuario = escape(request.form["regusuario"])
                 regclave = escape(request.form["regclave"])
+                tipousuario = "usuario"
 
                 #Se hace hash a la clave
                 regclave = regclave + regusuario #salt agregada
                 regclave = generate_password_hash(regclave)                
 
-                #db = get_db()
-                #db.execute("insert into usuario ( nombre, usuario, clave) values( ?, ?, ?)",(regnombre, regusuario, regclave))
-                #db.commit()
-                #db.close()
+                db = get_db()
+                try:
+                    db.execute("insert into usuario (usuario,nombre, clave, tipousuario) values( ?, ?, ?, ?)",(regusuario, regnombre, regclave, tipousuario))
+                    db.commit()
+                except Exception as e:
+                    print('Exception: {}'.format(e))
+                db.close()
 
-                return regusuario +" "+ regclave
+                return redirect(url_for('main.profile')) 
     return render_template('loginwtf.html', formlogin = formlogin, formregister = formregister)
 
 
@@ -69,11 +95,12 @@ def contacto():
     return render_template('contact.html')
 
 @main.route( '/profile/', methods = ['GET','POST'])
+@login_required
 def profile():
     """Función que maneja el perfil de la página.
     """
-
-    return render_template('profile.html')
+    formedit = formeditar()
+    return render_template('profile.html', formedit = formedit)
 
 @main.route( '/wish/', methods = ['GET','POST'])
 def wish():
@@ -90,21 +117,9 @@ def calificacion():
 
     return render_template('calificaciones.html')
 
-#@main.route( '/login/', methods = ['GET','POST'])
-#def login():
-#    """Función que maneja la página de login y registro.
-#
-#        Aquí se capturan los datos de los formularios y realiza el acceso al usuario o se
-#        reciben los datos de registro que luego serán enviados a la BD.
-#    """
-#    if request.method == 'POST':
-#        if request.form.get("iniciosesion"):
-#            if (request.form['username'] == 'usuario1') & (request.form['password'] == "prueba1"):
-#                return redirect(url_for('main.profile'))
-#        elif request.form.get("registrate"):
-#            if (request.form["form-usuario"] != "") | (request.form["form-password"]!= ""):
-#                newuser = request.form["form-usuario"]
-#                newpass = request.form["form-password"]
-#                return newuser +" "+ newpass
-#
-#    return render_template('login.html')
+@main.route( '/logout/', methods = ['GET','POST'])
+def logout():
+    """Función que permite salir de la sesión.
+    """
+    session.clear()
+    return redirect(url_for('main.home'))

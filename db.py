@@ -7,7 +7,7 @@ def get_db():
     try:
         if 'db' not in g:
             
-            g.db=sqlite3.connect('database.db')
+            g.db=sqlite3.connect('proyectoecommerce.db')
             print('conectada')
             return g.db
     except Error:

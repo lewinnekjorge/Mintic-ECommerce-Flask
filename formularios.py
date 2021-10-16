@@ -15,3 +15,7 @@ class formularioRegistro(FlaskForm):
     regclave2 = PasswordField('Confirmar Contraseña', validators=[InputRequired(message='Campo no puede estar vacío'),EqualTo('regclave', message='Contraseñas deben ser iguales')])
     registrarse = SubmitField('REGISTRATE')
 
+class formeditar(FlaskForm):
+    editnombre = StringField('Nombre', validators=[InputRequired(message='Campo no puede estar vacío')])
+    editusuario = StringField('Nombre', validators=[InputRequired(message='Campo no puede estar vacío')])
+
