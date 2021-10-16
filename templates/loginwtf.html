@@ -15,17 +15,23 @@
                             </div>-->
                         </div>
                         <div class="form-bottom" style="padding-left: 10%; padding-right: 10%;">
-                            <form role="form" action="" method="POST" class="login-form">
+                            <form name="formuLogin" role="form" method="POST" class="login-form">
+                                {{ formlogin.hidden_tag() }}
                                 <div class="form-group" style="padding-bottom:5%">
-                                    <label for="form-username" style="padding-bottom:1%">Usuario</label>
-                                    <input type="text" name="username" placeholder="Usuario..." class="form-control" id="form-username">
+                                    {{ formlogin.logusuario.label(style="padding-bottom:1%") }}
+                                    {{ formlogin.logusuario(class="form-control",placeholder="Usuario...") }}
+                                    <ul>
+                                    {% for error in formlogin.logusuario.errors %}
+                                        <li style = "color:red;">{{ error }}</li>
+                                    {% endfor %}
+                                    </ul>
                                 </div>
                                 <div class="form-group">
-                                    <label for="form-password" style="padding-bottom:1%">Contraseña</label>
-                                    <input type="password" name="password" placeholder="Contraseña..." class="form-control" id="form-password">
+                                    {{ formlogin.logclave.label(style="padding-bottom:1%") }}
+                                    {{ formlogin.logclave(class="form-control",placeholder="Contraseña...") }}
                                 </div>
                                 <div class="d-grid gap-2" style= "padding-top: 10%">
-                                <button type="submit" class="btn btn-secondary" name="iniciosesion" value="iniciosesion">INICIAR SESIÓN</button>
+                                    {{ formlogin.enviar(class = "btn btn-secondary") }}
                                 </div>
                             </form>
                         </div>
@@ -42,25 +48,26 @@
 	                        		</div>
 	                            </div>
 	                            <div class="form-bottom" style="padding-left: 10%; padding-right: 10%;">
-				                    <form role="form" action="" method="post" class="registration-form">
+				                    <form name="formuRegister" role="form" method="POST" class="registration-form">
+                                        {{ formregister.hidden_tag() }}
 				                    	<div class="form-group">
-				                    		<label for="form-first-name" style="padding-bottom:1%">Nombre</label>
-				                        	<input type="text" name="form-name" placeholder="Nombre..." class="form-control" id="formname">
+                                            {{ formregister.regnombre.label(style="padding-bottom:1%") }}
+                                            {{ formregister.regnombre(class="form-control",placeholder="Nombre...") }}
 				                        </div>
 				                        <div class="form-group">
-				                        	<label for="form-last-name" style="padding-bottom:1%; padding-top: 2%;">Usuario</label>
-				                        	<input type="text" name="form-usuario" placeholder="Usuario..." class="form-control" id="formuser">
+                                            {{ formregister.regusuario.label(style="padding-bottom:1%; padding-top: 2%") }}
+                                            {{ formregister.regusuario(class="form-control",placeholder="Usuario...") }}
 				                        </div>
 				                        <div class="form-group">
-				                        	<label for="form-password" style="padding-bottom:1%; padding-top: 2%;">Contraseña</label>
-				                        	<input type="password" name="form-password" placeholder="Contraseña..." class="form-control" id="formpass">
+                                            {{ formregister.regclave.label(style="padding-bottom:1%; padding-top: 2%") }}
+                                            {{ formregister.regclave(class="form-control",placeholder="Contraseña...") }}
 				                        </div>
 				                        <div class="form-group">
-				                        	<label for="form-password" style="padding-bottom:1%; padding-top: 2%;">Confirme su Contraseña</label>
-				                        	<input type="password" name="form-password2" placeholder="Contraseña..." class="form-control" id="formconficlave">
+                                            {{ formregister.regclave2.label(style="padding-bottom:1%; padding-top: 2%") }}
+                                            {{ formregister.regclave2(class="form-control",placeholder="Confirme su Contraseña...") }}
 				                        </div>
                                         <div class="d-grid gap-2" style= "padding-top: 10%; padding-bottom: 10%;">
-                                        <button type="submit" class="btn btn-secondary" name="registrate" value="registrate">REGISTRATE</button>
+                                            {{ formregister.registrarse(class = "btn btn-secondary") }}
                                         </div>
 				                    </form>
 			                    </div>                        	
