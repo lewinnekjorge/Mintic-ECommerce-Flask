@@ -10,6 +10,7 @@
                     <h2 class = "profiletitles">Información Personal:</h2>
                 </div>
                 <div class="col">
+                    <form name="formeditar" role="form" method="POST" class="form">
                     {{ formedit.hidden_tag() }}
                     {{ formedit.editnombre(class="form-control bg-light", id = "nombre",value=session['nombre'], disabled=True) }}
                     <p></p>
@@ -17,6 +18,7 @@
                     <p></p>
                     <button type="button" class="btn btn-secondary" onclick="desbloqueo()">Editar</button>
                     {{ formedit.guardar(class="btn btn-secondary") }}
+                    </form>
 
                 </div>
             </div>

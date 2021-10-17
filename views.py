@@ -36,7 +36,7 @@ def login():
             logusuario = request.form['logusuario']
             logclave = request.form['logclave']
             db = get_db()
-            consultabd = db.execute('select * from usuario where usuario = ?',(logusuario,)).fetchone()
+            consultabd = db.execute('select * from usuarios where usuario = ?',(logusuario,)).fetchone()
             db.commit()
             db.close()
             sw = False
@@ -62,7 +62,7 @@ def login():
 
                 db = get_db()
                 try:
-                    db.execute("insert into usuario (usuario,nombre, clave, tipousuario) values( ?, ?, ?, ?)",(regusuario, regnombre, regclave, tipousuario))
+                    db.execute("insert into usuarios (usuario,nombre, clave, tipousuario) values( ?, ?, ?, ?)",(regusuario, regnombre, regclave, tipousuario))
                     db.commit()
                 except Exception as e:
                     print('Exception: {}'.format(e))
@@ -71,6 +71,26 @@ def login():
                 return redirect(url_for('main.profile')) 
     return render_template('loginwtf.html', formlogin = formlogin, formregister = formregister)
 
+@main.route( '/profile/', methods = ['GET','POST'])
+@login_required
+def profile():
+    """Función que maneja el perfil de la página.
+    """
+    print("LO QUE SEAAAAAA")
+
+    formedit = formeditar()
+    if request.method == "POST":
+        print("LO QUE SEAAAAAA")
+        if request.form.get("guardar"):
+            db = get_db()
+            try:
+                db.execute("update usuario set nombre = ? where usuarios = ?",(request.form['editnombre'], session['usuario'],))
+                db.commit()
+            except Exception as e:
+                print('Exception: {}'.format(e))
+            db.close()
+
+    return render_template('profile.html', formedit = formedit)
 
 @main.route( '/productos/', methods = ['GET','POST'])
 def product():
@@ -95,13 +115,6 @@ def contacto():
 
     return render_template('contact.html')
 
-@main.route( '/profile/', methods = ['GET','POST'])
-@login_required
-def profile():
-    """Función que maneja el perfil de la página.
-    """
-    formedit = formeditar()
-    return render_template('profile.html', formedit = formedit)
 
 @main.route( '/wish/', methods = ['GET','POST'])
 def wish():
