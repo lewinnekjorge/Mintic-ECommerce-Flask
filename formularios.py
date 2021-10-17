@@ -17,5 +17,6 @@ class formularioRegistro(FlaskForm):
 
 class formeditar(FlaskForm):
     editnombre = StringField('Nombre', validators=[InputRequired(message='Campo no puede estar vacío')])
-    editusuario = StringField('Nombre', validators=[InputRequired(message='Campo no puede estar vacío')])
+    editusuario = StringField('Usuario', validators=[InputRequired(message='Campo no puede estar vacío')])
+    guardar = SubmitField('Guardar')
 

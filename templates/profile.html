@@ -10,12 +10,14 @@
                     <h2 class = "profiletitles">Información Personal:</h2>
                 </div>
                 <div class="col">
-                    <input class="form-control bg-light" type="text" id= "nombre" value="jameson" disabled>
+                    {{ formedit.hidden_tag() }}
+                    {{ formedit.editnombre(class="form-control bg-light", id = "nombre",value=session['nombre'], disabled=True) }}
                     <p></p>
-                    <input class="form-control bg-light" type="text" id= "username" value="james" disabled>
+                    {{ formedit.editnombre(class="form-control bg-light", id = "username",value=session['usuario'], disabled=True) }}
                     <p></p>
                     <button type="button" class="btn btn-secondary" onclick="desbloqueo()">Editar</button>
-                    <button type="button" class="btn btn-secondary" onclick="guardar()">Guardar</button>
+                    {{ formedit.guardar(class="btn btn-secondary") }}
+
                 </div>
             </div>
         </div>
@@ -54,6 +56,9 @@
                 </div>
             </div>
         </div>
+        <div class="d-grid gap-2" style= "padding-top: 10%; padding-bottom: 10%;">
+            <a href="{{url_for('main.logout')}}" class="btn btn-secondary">CERRAR SESION</a>
+            </div>
     </div>
 </div>
 

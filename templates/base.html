@@ -21,9 +21,15 @@
         <div>
         <ul class = "nav">
             <li class="nav">
+              {% if session['boologeado'] != True %}
               <a href="{{url_for('main.login')}}" class="btn btn-outline-secondary">Iniciar Sesión</a>
+              {% else %}
+              <a href="{{url_for('main.profile')}}" class="btn btn-outline-secondary">Ver Mi Perfil</a>
+              {% endif %}
               &emsp;
+              {% if session['tipousuario']== 'administrador' %}
               <a href="#" class="btn btn-outline-secondary">Administrador</a>
+              {% endif %}
             </li>
             </ul>
         </div>

@@ -31,6 +31,7 @@ def login():
     formlogin = formularioLogin()
     formregister = formularioRegistro()
     if request.method == 'POST':
+        
         if request.form.get("enviar"): #Si el submit se activa con el botón de Iniciar Sesión
             logusuario = request.form['logusuario']
             logclave = request.form['logclave']
