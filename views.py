@@ -22,6 +22,9 @@ def login_required(view):
 def home():
     """Función que maneja la raiz del sitio web.
     """
+    db = get_db()
+    consulta = db.execute('select * from productos')
+
     return render_template('index.html')
 
 @main.route( '/login/', methods = ['GET','POST'])
