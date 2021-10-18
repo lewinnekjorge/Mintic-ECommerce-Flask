@@ -10,29 +10,35 @@
 
 <div class="container" style="padding: 10%;padding-top: 3%;padding-bottom: 3%;">
   <div class="text-center"><h3>Contáctenos</h3></div>
+  <form id="FormConta">
     <div class="mb-3">
       <label for="exampleFormControlInput1" class="form-label">Nombre:</label>
-      <input type="email" class="form-control" id="formnombre" placeholder="Nombre">
+      <input type="text" class="form-control" id="formnombre" placeholder="Nombre">
+      <p class="warnings" id="warnings"></p>
     </div>
 
     <div class="mb-3">
       <label for="exampleFormControlInput1" class="form-label">E-Mail:</label>
       <input type="email" class="form-control" id="formemail" placeholder="E-Mail">
+      <p class="warnings" id="warnings1"></p>
     </div>
 
     <div class="mb-3">
       <label for="exampleFormControlInput1" class="form-label">Asunto:</label>
-      <input type="email" class="form-control" id="formasunto" placeholder="...">
+      <input type="text" class="form-control" id="formasunto" placeholder="...">
+      <p class="warnings" id="warnings2"></p>
     </div>
 
     <div class="mb-3">
       <label for="exampleFormControlTextarea1" class="form-label">Mensaje:</label>
       <textarea class="form-control" id="formmensaje" rows="3"></textarea>
+      <p class="warnings" id="warnings3"></p>
     </div>
 
     <div class="d-grid gap-2" style= "padding-top: 3%">
       <button type="submit" class="btn btn-secondary">ENVIAR</button>
-    </div>
+      </div>
+  </form>
 </div>
 
 &nbsp;

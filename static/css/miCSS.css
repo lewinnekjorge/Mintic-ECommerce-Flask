@@ -234,3 +234,11 @@ footer{
 .checked {
     color: orange;
 }
+
+.warnings{
+    width: 200px;
+    text-align: center;
+    margin: left;
+    color: #ec5109;
+    padding-top: 20px;
+}
