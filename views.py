@@ -1,6 +1,7 @@
 import functools
 from os import error
 from flask import Flask, render_template, blueprints, request, redirect, url_for, session, flash
+from classes import producto
 from formularios import *
 from werkzeug.security import check_password_hash, generate_password_hash
 from db import get_db
@@ -33,7 +34,13 @@ def home():
     """Función que maneja la raiz del sitio web.
     """
     db = get_db()
-    consulta = db.execute('select * from productos')
+    try:
+        consulta = db.execute('select * from productos').fetchall()
+        db.commit()
+    except Exception as e:
+        print('Exception: {}'.format(e))
+    db.close()
+    print(type(consulta[0]))
 
     return render_template('index.html')
 
@@ -47,8 +54,6 @@ def login():
     if request.method == 'POST':
         
         if request.form.get("enviar"): #Si el submit se activa con el botón de Iniciar Sesión
-            print('PRUEBAAAAA')
-
             if formlogin.validate_on_submit():
                 logusuario = request.form['logusuario']
                 logclave = request.form['logclave']

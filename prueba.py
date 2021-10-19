@@ -1,9 +1,14 @@
 from classes import *
 
-producto1 = producto(1,'camisa1','camisa','M',30000,'blabla')
-producto2 = producto(1,'camisa2','camisa','L',50000,'blabla')
-producto3 = producto(1,'pantalon1','pantalon','34',100000,'blabla')
+producto1 = producto(1,'camisa1','camisa','M',30000)
+producto2 = producto(1,'camisa2','camisa','L',50000)
+producto3 = producto(1,'pantalon1','pantalon','34',100000)
+listica = [(1,'camisa1','camisa','M',30000),(1,'camisa2','camisa','L',50000)]
+producto4 = producto(listica[0])
 
+print(producto4.nombre)
+
+"""
 itemcompra1 = itemcompra(producto1,2)
 itemcompra2 = itemcompra(producto2,1)
 
@@ -26,3 +31,4 @@ cal1 = review(producto1, 'Me gustó mucho', 5)
 
 print(cal1.producto.nombre, ' ', cal1.comentario)
 
+"""
