@@ -18,6 +18,16 @@ def login_required(view):
     
     return wraped_view
 
+def login_done(view):
+
+    @functools.wraps(view)
+    def wraped_view(**kwargs):
+        if 'usuario' in session:
+            return redirect(url_for('main.profile'))
+        return view(**kwargs)
+    
+    return wraped_view
+
 @main.route( '/' , methods = ['GET','POST'])
 def home():
     """Función que maneja la raiz del sitio web.
@@ -28,6 +38,7 @@ def home():
     return render_template('index.html')
 
 @main.route( '/login/', methods = ['GET','POST'])
+@login_done
 def login():
     """Función de prueba formularios wtf.
     """
@@ -36,24 +47,31 @@ def login():
     if request.method == 'POST':
         
         if request.form.get("enviar"): #Si el submit se activa con el botón de Iniciar Sesión
-            logusuario = request.form['logusuario']
-            logclave = request.form['logclave']
-            db = get_db()
-            consultabd = db.execute('select * from usuarios where usuario = ?',(logusuario,)).fetchone()
-            db.commit()
-            db.close()
-            sw = False
-            if consultabd != None:
-                logclave = logclave + logusuario #salt agregada
-                sw = check_password_hash(consultabd[2], logclave)
-                if (sw) == True:
-                    session['usuario'] = consultabd[0]
-                    session['nombre'] = consultabd[1]
-                    session['tipousuario'] = consultabd[3]
-                    session['boologeado'] = True
-                    return redirect(url_for('main.profile')) 
-        
+            print('PRUEBAAAAA')
+
+            if formlogin.validate_on_submit():
+                logusuario = request.form['logusuario']
+                logclave = request.form['logclave']
+                db = get_db()
+                consultabd = db.execute('select * from usuarios where usuario = ?',(logusuario,)).fetchone()
+                db.commit()
+                db.close()
+                sw = False
+                if consultabd != None:
+                    logclave = logclave + logusuario #salt agregada
+                    sw = check_password_hash(consultabd[2], logclave)
+                    if (sw) == True:
+                        session['usuario'] = consultabd[0]
+                        session['nombre'] = consultabd[1]
+                        session['tipousuario'] = consultabd[3]
+                        session['boologeado'] = True
+                        return redirect(url_for('main.profile'))
+                else:
+                    flash('Usuario o contraseña errados','errordelogin')
+                    return redirect(url_for('main.login', error = error))
+            
         elif request.form.get("registrarse"): #Si el submit se activa con el botón de Registrarse
+            if formregister.validate_on_submit():
                 regnombre = escape(request.form["regnombre"])
                 regusuario = escape(request.form["regusuario"])
                 regclave = escape(request.form["regclave"])
@@ -70,8 +88,8 @@ def login():
                 except Exception as e:
                     print('Exception: {}'.format(e))
                 db.close()
-
-                return redirect(url_for('main.profile')) 
+                flash('Su usuario ha sido registrado exitosamente')
+                return redirect(url_for('main.login')) 
     return render_template('loginwtf.html', formlogin = formlogin, formregister = formregister)
 
 @main.route( '/profile/', methods = ['GET','POST'])
@@ -79,8 +97,6 @@ def login():
 def profile():
     """Función que maneja el perfil de la página.
     """
-    print("LO QUE SEAAAAAA")
-
     formedit = formeditar()
     if request.method == "POST":
         print("LO QUE SEAAAAAA")

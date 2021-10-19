@@ -20,17 +20,19 @@
                                 <div class="form-group" style="padding-bottom:5%">
                                     {{ formlogin.logusuario.label(style="padding-bottom:1%") }}
                                     {{ formlogin.logusuario(class="form-control",placeholder="Usuario...") }}
-                                    <ul>
-                                    {% for error in formlogin.logusuario.errors %}
-                                        <li style = "color:red;">{{ error }}</li>
-                                    {% endfor %}
-                                    </ul>
                                 </div>
                                 <div class="form-group">
                                     {{ formlogin.logclave.label(style="padding-bottom:1%") }}
                                     {{ formlogin.logclave(class="form-control",placeholder="Contraseña...") }}
                                 </div>
                                 <div class="d-grid gap-2" style= "padding-top: 10%">
+                                    {% with messages = get_flashed_messages(category_filter=['errordelogin']) %}
+                                    {% if messages %}
+                                    {% for msg in messages %}
+                                    <span style="color: red" >{{msg}}</span>
+                                    {% endfor %}
+                                    {% endif %}
+                                    {% endwith %}
                                     {{ formlogin.enviar(class = "btn btn-secondary") }}
                                 </div>
                             </form>
@@ -53,18 +55,30 @@
 				                    	<div class="form-group">
                                             {{ formregister.regnombre.label(style="padding-bottom:1%") }}
                                             {{ formregister.regnombre(class="form-control",placeholder="Nombre...") }}
+                                                {% for error in formregister.regnombre.errors %}
+                                                    <span style = "color:red;">{{ error }}</span>
+                                                {% endfor %}
 				                        </div>
 				                        <div class="form-group">
                                             {{ formregister.regusuario.label(style="padding-bottom:1%; padding-top: 2%") }}
                                             {{ formregister.regusuario(class="form-control",placeholder="Usuario...") }}
+                                                {% for error in formregister.regusuario.errors %}
+                                                    <span style = "color:red;">{{ error }}</span>
+                                                {% endfor %}
 				                        </div>
 				                        <div class="form-group">
                                             {{ formregister.regclave.label(style="padding-bottom:1%; padding-top: 2%") }}
                                             {{ formregister.regclave(class="form-control",placeholder="Contraseña...") }}
+                                                {% for error in formregister.regclave.errors %}
+                                                    <span style = "color:red;">{{ error }}</span>
+                                                {% endfor %}
 				                        </div>
 				                        <div class="form-group">
                                             {{ formregister.regclave2.label(style="padding-bottom:1%; padding-top: 2%") }}
                                             {{ formregister.regclave2(class="form-control",placeholder="Confirme su Contraseña...") }}
+                                                {% for error in formregister.regclave2.errors %}
+                                                    <span style = "color:red;">{{ error }}</span>
+                                                {% endfor %}
 				                        </div>
                                         <div class="d-grid gap-2" style= "padding-top: 10%; padding-bottom: 10%;">
                                             {{ formregister.registrarse(class = "btn btn-secondary") }}
