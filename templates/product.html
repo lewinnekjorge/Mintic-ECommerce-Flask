@@ -25,6 +25,7 @@
       <div class="card-body">
         <p class="card-title">{{ producto.nombre }}</p>
         <h5 class="card-text">{{ "$%.0f"|format(producto.precio|float) }}</h5>
+        <a href="{{url_for('main.cart')}}" class="btn btn-primary">Add to cart</a>
       </div>
     </a>
 
