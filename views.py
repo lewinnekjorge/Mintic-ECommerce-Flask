@@ -173,3 +173,11 @@ def logout():
     """
     session.clear()
     return redirect(url_for('main.home'))
+
+@main.route( '/productos/prueba', methods = ['GET'])
+def detalleproducto():
+    """Función de prueba.
+    """
+    category = request.args.get('type')
+    print(category)
+    return "Hola Mundo"

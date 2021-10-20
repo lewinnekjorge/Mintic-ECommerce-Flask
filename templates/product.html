@@ -20,11 +20,14 @@
   <div class="card-group">
     {% for producto in tipo %}
     <div class="card">
+      <a class = "text-muted" style="text-decoration: none;" href="{{url_for('main.detalleproducto',type=producto.id)}}">
       <img src={{ producto.img }} class="card-img-top">
       <div class="card-body">
         <p class="card-title">{{ producto.nombre }}</p>
         <h5 class="card-text">{{ "$%.0f"|format(producto.precio|float) }}</h5>
       </div>
+    </a>
+
     </div>
     {% endfor %}     
   </div>
