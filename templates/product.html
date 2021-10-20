@@ -20,7 +20,7 @@
   <div class="card-group">
     {% for producto in tipo %}
     <div class="card">
-      <a class = "text-muted" style="text-decoration: none;" href="{{url_for('main.detalleproducto',type=producto.id)}}">
+      <a class = "text-muted" style="text-decoration: none;" href="{{url_for('main.detalleproducto',type=producto.id, variable =producto.id )}}">
       <img src={{ producto.img }} class="card-img-top">
       <div class="card-body">
         <p class="card-title">{{ producto.nombre }}</p>

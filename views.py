@@ -4,7 +4,7 @@ from flask import Flask, render_template, blueprints, request, redirect, url_for
 from classes import *
 from formularios import *
 from werkzeug.security import check_password_hash, generate_password_hash
-from db import get_db, statementosall, statementosmany
+from db import get_db, statementosall, statementosmany, statementosone
 from markupsafe import escape
 
 main= blueprints.Blueprint('main', __name__)
@@ -35,7 +35,7 @@ def home():
     """
     consulta = statementosmany('select * from productos order by random()',4) #función inventada para reducir espacio
     misproductos = productosfromlista(consulta) #función inventada para crear vector de productos from lista
-
+    print(misproductos)
     return render_template('index.html', misproductos=misproductos)
 
 @main.route( '/login/', methods = ['GET','POST'])
@@ -174,10 +174,17 @@ def logout():
     session.clear()
     return redirect(url_for('main.home'))
 
-@main.route( '/productos/prueba', methods = ['GET'])
-def detalleproducto():
+@main.route( '/productos/<variable>', methods = ['GET'])
+def detalleproducto(variable):
     """Función de prueba.
     """
     category = request.args.get('type')
-    print(category)
-    return "Hola Mundo"
+    db = get_db()
+    try:
+        consulta = db.execute('select * from productos where id = ?',(variable,)).fetchone() #la coma es necesaria para que no se pase las palabras
+        print(consulta)
+    except Exception as e:
+        print('Exception: {}'.format(e))
+    db.close()
+    productoclickeado = producto(consulta)
+    return productoclickeado.nombre
