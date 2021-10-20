@@ -58,10 +58,12 @@ footer{
 }
 .card-img-top {
     width: 100%;
-    height: 20vw;
+    height: 25vw;
     object-fit: cover;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-    border-radius: 33px;
+    border-radius: 25px;
+    border-collapse: separate; 
+
 }
 
 .card-title{

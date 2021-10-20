@@ -31,7 +31,7 @@
                 <div class="col">
                     <h1 style="padding-bottom:0%;"></h1>
                   <h5 class="name" style="font-size: large;">
-                    <img class = "img-fluid" style= "width:10%" src= "{{ url_for('static', filename='img/wallet.png') }}">$150.000</h5>
+                    <img class = "img-fluid" style= "width:10%" src= "{{ url_for('static', filename='img/wallet.png') }}">{{ "$%.0f"|format(session['balance']|float) }}</h5>
                 </div>
             </div>
         </div>

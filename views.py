@@ -4,7 +4,7 @@ from flask import Flask, render_template, blueprints, request, redirect, url_for
 from classes import *
 from formularios import *
 from werkzeug.security import check_password_hash, generate_password_hash
-from db import get_db
+from db import get_db, statementosall, statementosmany
 from markupsafe import escape
 
 main= blueprints.Blueprint('main', __name__)
@@ -33,15 +33,8 @@ def login_done(view):
 def home():
     """Función que maneja la raiz del sitio web.
     """
-    db = get_db()
-    try:
-        consulta = db.execute('select * from productos').fetchmany(4)
-        db.commit()
-    except Exception as e:
-        print('Exception: {}'.format(e))
-    db.close()
-    misproductos = productosfromlista(consulta)
-    print(misproductos)
+    consulta = statementosmany('select * from productos order by random()',4) #función inventada para reducir espacio
+    misproductos = productosfromlista(consulta) #función inventada para crear vector de productos from lista
 
     return render_template('index.html', misproductos=misproductos)
 
@@ -70,6 +63,7 @@ def login():
                         session['usuario'] = consultabd[0]
                         session['nombre'] = consultabd[1]
                         session['tipousuario'] = consultabd[3]
+                        session['balance'] = consultabd[4]
                         session['boologeado'] = True
                         return redirect(url_for('main.profile'))
                 else:
@@ -121,8 +115,25 @@ def profile():
 def product():
     """Función de producto.
     """
-
-    return render_template('product.html')
+    consulta2 = statementosall('select distinct tipo from productos')
+    portipo = []
+    productosportipo = []
+    #for tipo in consulta2:
+    #    tipos.append(tipo) #se obtienen los tipos de productos de la base de datos.
+    db = get_db()
+    for tipo in consulta2:
+        try:
+            consulta2 = db.execute('select * from productos where "tipo" = ? ',(tipo)).fetchall()
+            db.commit()
+        except Exception as e:
+            print('Exception: {}'.format(e))
+        portipo.append(consulta2)
+    db.close()
+    for tipo in portipo:
+        auxiliar = productosfromlista(tipo) #obtengo lista de productos from lista de tipos
+        productosportipo.append(auxiliar) #agrego todos los vectores en una sola matriz
+    
+    return render_template('product.html', productosportipo = productosportipo)
 
 @main.route( '/cart/', methods = ['GET','POST'])
 def cart():

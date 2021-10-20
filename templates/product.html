@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block cuerpo %}
- <section class="contenedorexterno">
+<section class="contenedorexterno">
   <div class = "frase">
     <h1>
       <span class="text-center">Productos</span>
@@ -15,153 +15,23 @@
 <div class="container text-center">
   <div class = "spacer">
   </div>
-  <h3>Camisas</h3>
-    <div class="card-group">
-        <div class="card">
-          <img src="{{ url_for('static', filename='img/cam1.jpg')}}" class="card-img-top">
-            <div class="card-body">
-              <p class="card-title">Product1</p>
-                <h5 class="card-text">$50</h5>
-            </div>
-        </div>
-        <div class="card">
-          <img src="{{ url_for('static', filename='img/cam2.jpg')}}" class="card-img-top">
-            <div class="card-body">
-              <p class="card-title">Product2</p>
-                <h5 class="card-text">$60</h5>
-            </div>
-        </div>
-        <div class="card">
-          <img src="{{ url_for('static', filename='img/cam3.jpg')}}" class="card-img-top">
-          <div class="card-body">
-          <p class="card-title">Product 3</p>
-          <h5 class="card-text">$30</h5>
-          </div>
-        </div>
-      <div class="card">
-        <img src="{{ url_for('static', filename='img/cam4.jpg')}}" class="card-img-top">
-        <div class="card-body">
-          <p class="card-title">Product 4</p>
-          <h5 class="card-text">$45</h5>
-        </div>
+  {% for tipo in productosportipo %}
+  <h3>{{ tipo[0].tipo }}</h3>
+  <div class="card-group">
+    {% for producto in tipo %}
+    <div class="card">
+      <img src={{ producto.img }} class="card-img-top">
+      <div class="card-body">
+        <p class="card-title">{{ producto.nombre }}</p>
+        <h5 class="card-text">{{ "$%.0f"|format(producto.precio|float) }}</h5>
       </div>
     </div>
+    {% endfor %}     
   </div>
-  </div>
-  </section>
-  <div class="container text-center">
-    <div class = "spacer">
-    </div>
-    <h3>Camisas Mangas Largas</h3>
-    <div class="card-group">
-        <div class="card">
-          <img src="{{ url_for('static', filename='img/buz1.jpg')}}" class="card-img-top">
-            <div class="card-body">
-              <p class="card-title">Product1</p>
-                <h5 class="card-text">$50</h5>
-            </div>
-        </div>
-        <div class="card">
-          <img src="{{ url_for('static', filename='img/buz2.jpg')}}" class="card-img-top">
-            <div class="card-body">
-              <p class="card-title">Product2</p>
-                <h5 class="card-text">$60</h5>
-            </div>
-        </div>
-        <div class="card">
-          <img src="{{ url_for('static', filename='img/buz3.jpg')}}" class="card-img-top">
-          <div class="card-body">
-          <p class="card-title">Product 3</p>
-          <h5 class="card-text">$30</h5>
-          </div>
-        </div>
-      <div class="card">
-        <img src="{{ url_for('static', filename='img/buz4.jpg')}}" class="card-img-top">
-        <div class="card-body">
-          <p class="card-title">Product 4</p>
-          <h5 class="card-text">$45</h5>
-        </div>
-      </div>
-    </div>
-  </div>
-  </div>
-  </section>
-  <div class="container text-center">
-    <div class = "spacer">
-    </div>
-    <h3>Relojes</h3>
-    <div class="card-group">
-        <div class="card">
-          <img src="{{ url_for('static', filename='img/sho1.png')}}" class="card-img-top">
-            <div class="card-body">
-              <p class="card-title">Product1</p>
-                <h5 class="card-text">$50</h5>
-            </div>
-        </div>
-        <div class="card">
-          <img src="{{ url_for('static', filename='img/sho2.png')}}" class="card-img-top">
-            <div class="card-body">
-              <p class="card-title">Product2</p>
-                <h5 class="card-text">$60</h5>
-            </div>
-        </div>
-        <div class="card">
-          <img src="{{ url_for('static', filename='img/sho3.png')}}" class="card-img-top">
-          <div class="card-body">
-          <p class="card-title">Product 3</p>
-          <h5 class="card-text">$30</h5>
-          </div>
-        </div>
-      <div class="card">
-        <img src="{{ url_for('static', filename='img/sho4.png')}}" class="card-img-top">
-        <div class="card-body">
-          <p class="card-title">Product 4</p>
-          <h5 class="card-text">$45</h5>
-        </div>
-      </div>
-    </div>
-  </div>
-  </div>
-  </section>
-  <div class="container text-center">
-    <div class = "spacer">
-    </div>
-    <h3>Zapatos</h3>
-    <div class="card-group">
-        <div class="card">
-          <img src="{{ url_for('static', filename='img/ten1.jpg')}}" class="card-img-top">
-            <div class="card-body">
-              <p class="card-title">Product1</p>
-                <h5 class="card-text">$50</h5>
-            </div>
-        </div>
-        <div class="card">
-          <img src="{{ url_for('static', filename='img/ten2.jpg')}}" class="card-img-top">
-            <div class="card-body">
-              <p class="card-title">Product2</p>
-                <h5 class="card-text">$60</h5>
-            </div>
-        </div>
-        <div class="card">
-          <img src="{{ url_for('static', filename='img/ten3.jpg')}}" class="card-img-top">
-          <div class="card-body">
-          <p class="card-title">Product 3</p>
-          <h5 class="card-text">$30</h5>
-          </div>
-        </div>
-      <div class="card">
-        <img src="{{ url_for('static', filename='img/ten4.jpg')}}" class="card-img-top">
-        <div class="card-body">
-          <p class="card-title">Product 4</p>
-          <h5 class="card-text">$45</h5>
-        </div>
-      </div>
-    </div>
-  </div>
-  </div>
-  </section>
-  &emsp;
-    <div>
-        <img class="banner" src="{{ url_for('static', filename='img/banner2.jpg')}}">
-    </div>
-    {% endblock %}
+  {% endfor %}
+</div>
+&emsp;
+<div>
+    <img class="banner" src="{{ url_for('static', filename='img/banner2.jpg')}}">
+</div>
+{% endblock %}

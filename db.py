@@ -19,3 +19,36 @@ def close_db():
 
     if db is not None:
         db.close()
+
+def statementosall(sql):
+    #función que recibe la instrucción sql y retorna la consulta.
+    db = get_db()
+    try:
+        consulta = db.execute(sql).fetchall()
+        db.commit()
+    except Exception as e:
+        print('Exception: {}'.format(e))
+    close_db()
+    return (consulta)
+
+def statementosmany(sql,ent):
+    #función que recibe la instrucción sql y retorna la consulta.
+    db = get_db()
+    try:
+        consulta = db.execute(sql).fetchmany(ent)
+        db.commit()
+    except Exception as e:
+        print('Exception: {}'.format(e))
+    close_db()
+    return (consulta)
+
+def statementosone(sql):
+    #función que recibe la instrucción sql y retorna la consulta.
+    db = get_db()
+    try:
+        consulta = db.execute(sql).fetchone()
+        db.commit()
+    except Exception as e:
+        print('Exception: {}'.format(e))
+    close_db()
+    return (consulta)

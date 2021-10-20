@@ -2,29 +2,31 @@
 {% block cuerpo %}
 <section class="contenedorexterno">
   <div class = "frase">
-    <h2>
+    <h1>
       <span class="text-center">El Sitio E-Commerce #1 en el Mundo</span>
-      <br><span class="text-center">Todos nuestros productos fueron diseñados por los mejores de Europa</span>
-    </h2>
+    </h1>
+      <h3>
+        <br><span class="text-center">Todos nuestros productos fueron diseñados por los mejores de Europa</span>
+      </h3>    
   </div>
 </section>
 <div class="container text-center">
   <div class = "spacer">
   </div>
-  <h3>Productos Principales</h3>
+  <h3 style="padding-bottom: 5%;">Productos Principales</h3>
   <div class="card-group">
   {% for producto in misproductos %}
     <div class="card">
       <img src={{ producto.img }} class="card-img-top">
       <div class="card-body">
         <a><p class="card-title">{{ producto.nombre }}</p></a>
-        <h5 class="card-text">{{ producto.precio }}</h5>
+        <h5 class="card-text">{{ "$%.0f"|format(producto.precio|float) }}</h5>
       </div>
     </div>
   {% endfor %}
   </div>
 </div>
-    <div>
+    <div style="padding-top: 5%;">
         <img class="banner" src="{{ url_for('static', filename='img/banner2.jpg') }}">
     </div>
 {% endblock %}
