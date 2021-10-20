@@ -1,12 +1,17 @@
 from classes import *
 
-producto1 = producto(1,'camisa1','camisa','M',30000)
-producto2 = producto(1,'camisa2','camisa','L',50000)
-producto3 = producto(1,'pantalon1','pantalon','34',100000)
-listica = [(1,'camisa1','camisa','M',30000),(1,'camisa2','camisa','L',50000)]
+producto1 = producto(1,'camisa1','camisa','M',30000,'img')
+producto2 = producto(1,'camisa2','camisa','L',50000,'img')
+producto3 = producto(1,'pantalon1','pantalon','34',100000,'img')
+listica = [(1,'camisa1','camisa','M',30000,'img'),(1,'camisa2','camisa','L',50000,'img')]
 producto4 = producto(listica[0])
 
-print(producto4.nombre)
+misproductos = productosfromlista(listica)
+
+print(type(listica[0]))
+
+for produco in misproductos:
+    print(produco.nombre)
 
 """
 itemcompra1 = itemcompra(producto1,2)

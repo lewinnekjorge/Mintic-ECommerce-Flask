@@ -1,7 +1,7 @@
 import functools
 from os import error
 from flask import Flask, render_template, blueprints, request, redirect, url_for, session, flash
-from classes import producto
+from classes import *
 from formularios import *
 from werkzeug.security import check_password_hash, generate_password_hash
 from db import get_db
@@ -35,14 +35,15 @@ def home():
     """
     db = get_db()
     try:
-        consulta = db.execute('select * from productos').fetchall()
+        consulta = db.execute('select * from productos').fetchmany(4)
         db.commit()
     except Exception as e:
         print('Exception: {}'.format(e))
     db.close()
-    print(type(consulta[0]))
+    misproductos = productosfromlista(consulta)
+    print(misproductos)
 
-    return render_template('index.html')
+    return render_template('index.html', misproductos=misproductos)
 
 @main.route( '/login/', methods = ['GET','POST'])
 @login_done
