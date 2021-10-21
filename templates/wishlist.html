@@ -23,39 +23,19 @@
                             <h4><b>Lista de Deseos</b></h4>
                         </div>
                     </div>
+                {% for item in listadeseo %}
                 <div class="row border-top border-bottom">
                     <div class="row main align-items-center">
-                        <div class="col-2"><img class="img-fluid" src="{{ url_for('static', filename='img/camisa1.jpg') }}"></div>
+                        <div class="col-2"><img class="img-fluid" src={{ item.producto.img }}></div>
                         <div class="col">
-                            <div class="row text-muted">Shirt</div>
-                            <div class="row">Cotton T-shirt</div>
+                            <div class="row text-muted">{{ item.producto.tipo }}</div>
+                            <div class="row">{{ item.producto.nombre }}</div>
                         </div>
-                        <div class="col"> <a href="#">-</a><a href="#" class="border">1</a><a href="#">+</a> </div>
-                        <div class="col">&euro; 44.00 <span class="close">&#10005;</span></div>
+                        <div class="col"> <a href="#">-</a><a href="#" class="border">{{ item.cantidad }}</a><a href="#">+</a> </div>
+                        <div class="col">&dollar;{{ item.subtotal }} <span class="close">&#10005;</span></div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="row main align-items-center">
-                        <div class="col-2"><img class="img-fluid" src="{{ url_for('static', filename='img/camisa2.jpg') }}"></div>
-                        <div class="col">
-                            <div class="row text-muted">Shirt</div>
-                            <div class="row">Cotton T-shirt</div>
-                        </div>
-                        <div class="col"> <a href="#">-</a><a href="#" class="border">1</a><a href="#">+</a> </div>
-                        <div class="col">&euro; 44.00 <span class="close">&#10005;</span></div>
-                    </div>
-                </div>
-                <div class="row border-top border-bottom">
-                    <div class="row main align-items-center">
-                        <div class="col-2"><img class="img-fluid" src="{{ url_for('static', filename='img/camiseta3.jpg') }}"></div>
-                        <div class="col">
-                            <div class="row text-muted">Shirt</div>
-                            <div class="row">Cotton T-shirt</div>
-                        </div>
-                        <div class="col"> <a href="#">-</a><a href="#" class="border">1</a><a href="#">+</a> </div>
-                        <div class="col">&euro; 44.00 <span class="close">&#10005;</span></div>
-                    </div>
-                </div>
+                {% endfor %}
                 <a class="back-to-shop text-muted" style= "cursor: pointer;" onclick= "history.back()">&leftarrow;Back to shop</a>
             </div> <button class="btn btn-secondary">AGREGAR AL CARRITO</button>
             </div>

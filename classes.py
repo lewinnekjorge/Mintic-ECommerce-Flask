@@ -37,8 +37,9 @@ class producto:
         #    self.img = args[0][5]
 
 class itemcompra:
-    def __init__(self, producto, cantidad):
+    def __init__(self, producto):
         self.producto = producto
+        cantidad = 1
         self.cantidad = cantidad
         self.subtotal = producto.precio * cantidad
         self.linea = [producto, cantidad, self.subtotal]

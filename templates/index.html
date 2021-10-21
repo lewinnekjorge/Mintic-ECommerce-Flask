@@ -17,11 +17,15 @@
   <div class="card-group">
   {% for producto in misproductos %}
     <div class="card">
+      <a class = "text-muted" style="text-decoration: none;" href="{{url_for('main.detalleproducto',type=producto.id, variable =producto.id )}}">
       <img src={{ producto.img }} class="card-img-top">
       <div class="card-body">
         <a><p class="card-title">{{ producto.nombre }}</p></a>
         <h5 class="card-text">{{ "$%.0f"|format(producto.precio|float) }}</h5>
+        <a href="{{url_for('main.cart')}}" class="little car"><img class = "img-fluid" style= "width:10%; padding:1%" src= "{{ url_for('static', filename='img/wishlist.png') }}" title = "Agregar a Lista"></a>
+        <a href="{{url_for('main.cart')}}" class="little car"><img class = "img-fluid" style= "width:10%; padding:1%" src= "{{ url_for('static', filename='img/add-to-cart.png') }}" title = "Agregar a Carrito"></a>
       </div>
+      </a>
     </div>
   {% endfor %}
   </div>

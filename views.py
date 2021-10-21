@@ -4,7 +4,7 @@ from flask import Flask, render_template, blueprints, request, redirect, url_for
 from classes import *
 from formularios import *
 from werkzeug.security import check_password_hash, generate_password_hash
-from db import get_db, statementosall, statementosmany, statementosone
+from db import get_db, productclicked, statementosall, statementosmany, statementosone
 from markupsafe import escape
 
 main= blueprints.Blueprint('main', __name__)
@@ -65,7 +65,7 @@ def login():
                         session['tipousuario'] = consultabd[3]
                         session['balance'] = consultabd[4]
                         session['boologeado'] = True
-                        session['carrito'] = []
+                        session['listadeseo'] = []
                         return redirect(url_for('main.profile'))
                 else:
                     flash('Usuario o contraseña errados','errordelogin')
@@ -152,14 +152,39 @@ def contacto():
 
     return render_template('contact.html')
 
-
 @main.route( '/wish/', methods = ['GET','POST'])
+@login_required
 def wish():
     """Función que maneja la lista de deseos
-
     """
+    productoclickeado1 = producto(productclicked("1111"))
+    item1 = itemcompra(productoclickeado1)
+    listadeseo = []
+    for i in range(0,4):
+        listadeseo.append(item1)
+    
+    return render_template('wishlist.html', listadeseo = listadeseo)
 
-    return render_template('wishlist.html')
+
+@main.route( '/agregar/<variable>', methods = ['GET','POST'])
+@login_required
+def agregaralista(variable):
+    """Función que maneja la lista de deseos
+    """
+    productoclickeado = producto(productclicked(variable))
+    item = itemcompra(productoclickeado)
+    try:
+        listadeseo.append(item)
+    except:
+        listadeseo = []
+        listadeseo.append(item)
+    print(listadeseo)
+    #session['lista']= []
+    #session['lista'].append(productoclickeado)
+    return '',204
+
+
+
 
 @main.route( '/calificacion/', methods = ['GET','POST'])
 def calificacion():
@@ -181,12 +206,5 @@ def detalleproducto(variable):
     """Función de prueba.
     """
     category = request.args.get('type')
-    db = get_db()
-    try:
-        consulta = db.execute('select * from productos where id = ?',(variable,)).fetchone() #la coma es necesaria para que no se pase las palabras
-        print(consulta)
-    except Exception as e:
-        print('Exception: {}'.format(e))
-    db.close()
-    productoclickeado = producto(consulta)
-    return productoclickeado.nombre
+    productoclickeado = producto(productclicked(variable)) #Método inventado en db.py para disminuir la cantidad de código en views.py
+    return render_template('productdesc.html',product=productoclickeado)
