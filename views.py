@@ -65,6 +65,7 @@ def login():
                         session['tipousuario'] = consultabd[3]
                         session['balance'] = consultabd[4]
                         session['boologeado'] = True
+                        session['carrito'] = []
                         return redirect(url_for('main.profile'))
                 else:
                     flash('Usuario o contraseña errados','errordelogin')
@@ -138,8 +139,8 @@ def product():
 @main.route( '/cart/', methods = ['GET','POST'])
 def cart():
     """Función que maneja el carrito de compras.
-
     """
+
 
     return render_template('shoppingcart.html')
 
@@ -164,6 +165,7 @@ def wish():
 def calificacion():
     """Función que  maneja las páginas de las calificaciones.
     """
+    
 
     return render_template('calificaciones.html')
 
