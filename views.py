@@ -160,7 +160,7 @@ def wish():
     productoclickeado1 = producto(productclicked("1111"))
     item1 = itemcompra(productoclickeado1)
     listadeseo = []
-    for i in range(0,4):
+    for i in range(0,3):
         listadeseo.append(item1)
     
     return render_template('wishlist.html', listadeseo = listadeseo)
@@ -182,8 +182,6 @@ def agregaralista(variable):
     #session['lista']= []
     #session['lista'].append(productoclickeado)
     return '',204
-
-
 
 
 @main.route( '/calificacion/', methods = ['GET','POST'])
