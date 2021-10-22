@@ -57,8 +57,7 @@ def productclicked(variable):
     db = get_db()
     try:
         consulta = db.execute('select * from productos where id = ?',(variable,)).fetchone() #la coma es necesaria para que no se pase las palabras
-        print(consulta)
     except Exception as e:
         print('Exception: {}'.format(e))
-    db.close()
+    close_db()
     return consulta

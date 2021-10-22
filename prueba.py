@@ -8,10 +8,19 @@ producto4 = producto(listica[0])
 
 misproductos = productosfromlista(listica)
 
-print(type(listica[0]))
+#print(type(listica[0]))
 
-for produco in misproductos:
-    print(produco.nombre)
+#for produco in misproductos:
+#    print(produco.nombre)
+
+ids = [('1113,1112,1111,1112,1112',)]
+
+#cadena = armarcadena(ids)
+
+newids = armarlista(ids[0][0])
+
+print(newids)
+
 
 """
 itemcompra1 = itemcompra(producto1,2)

@@ -51,3 +51,11 @@ class review:
         self.score = score
         
 
+def armarlista(ids):
+    ids = str(ids)
+    newids = ids.split(',')
+    return newids
+
+def armarcadena(lista):
+    cadena = ",".join(lista)
+    return cadena

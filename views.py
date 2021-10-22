@@ -4,7 +4,7 @@ from flask import Flask, render_template, blueprints, request, redirect, url_for
 from classes import *
 from formularios import *
 from werkzeug.security import check_password_hash, generate_password_hash
-from db import get_db, productclicked, statementosall, statementosmany, statementosone
+from db import *
 from markupsafe import escape
 
 main= blueprints.Blueprint('main', __name__)
@@ -54,7 +54,7 @@ def login():
                 db = get_db()
                 consultabd = db.execute('select * from usuarios where usuario = ?',(logusuario,)).fetchone()
                 db.commit()
-                db.close()
+                close_db()
                 sw = False
                 if consultabd != None:
                     logclave = logclave + logusuario #salt agregada
@@ -77,18 +77,19 @@ def login():
                 regusuario = escape(request.form["regusuario"])
                 regclave = escape(request.form["regclave"])
                 tipousuario = "usuario"
-
+                balance = 0
+                print(regusuario,regclave)
                 #Se hace hash a la clave
                 regclave = regclave + regusuario #salt agregada
                 regclave = generate_password_hash(regclave)                
 
                 db = get_db()
                 try:
-                    db.execute("insert into usuarios (usuario,nombre, clave, tipousuario) values( ?, ?, ?, ?)",(regusuario, regnombre, regclave, tipousuario))
+                    db.execute("insert into usuarios (usuario,nombre, clave, tipousuario,balance) values( ?, ?, ?, ?, ?)",(regusuario, regnombre, regclave, tipousuario,balance))
                     db.commit()
                 except Exception as e:
                     print('Exception: {}'.format(e))
-                db.close()
+                close_db()
                 flash('Su usuario ha sido registrado exitosamente')
                 return redirect(url_for('main.login')) 
     return render_template('loginwtf.html', formlogin = formlogin, formregister = formregister)
@@ -108,7 +109,7 @@ def profile():
                 db.commit()
             except Exception as e:
                 print('Exception: {}'.format(e))
-            db.close()
+            close_db()
 
     return render_template('profile.html', formedit = formedit)
 
@@ -129,7 +130,7 @@ def product():
         except Exception as e:
             print('Exception: {}'.format(e))
         portipo.append(consulta2)
-    db.close()
+    close_db()
     for tipo in portipo:
         auxiliar = productosfromlista(tipo) #obtengo lista de productos from lista de tipos
         productosportipo.append(auxiliar) #agrego todos los vectores en una sola matriz
@@ -157,11 +158,20 @@ def contacto():
 def wish():
     """Función que maneja la lista de deseos
     """
-    productoclickeado1 = producto(productclicked("1111"))
-    item1 = itemcompra(productoclickeado1)
     listadeseo = []
-    for i in range(0,3):
-        listadeseo.append(item1)
+    db = get_db()
+    try:
+        consulta = db.execute('select listadeseo from usuarios where usuario = ?',(session['usuario'],)).fetchall()
+        db.commit()
+    except Exception as e:
+        print('Exception: {}'.format(e))
+    close_db()
+    if consulta[0][0] != None:
+        newids = armarlista(consulta[0][0]) #Se debe tomar el primer valor del primer vector de la consulta
+        for ids in newids:
+            productoclickeado = producto(productclicked(ids))
+            item = itemcompra(productoclickeado)
+            listadeseo.append(item)
     
     return render_template('wishlist.html', listadeseo = listadeseo)
 
@@ -169,16 +179,29 @@ def wish():
 @main.route( '/agregar/<variable>', methods = ['GET','POST'])
 @login_required
 def agregaralista(variable):
-    """Función que maneja la lista de deseos
+    """Función que permite agregar productos a lista de deseos
     """
-    productoclickeado = producto(productclicked(variable))
-    item = itemcompra(productoclickeado)
+    db = get_db()
     try:
-        listadeseo.append(item)
-    except:
-        listadeseo = []
-        listadeseo.append(item)
-    print(listadeseo)
+        consulta = db.execute('select listadeseo from usuarios where usuario = ?',(session['usuario'],)).fetchall()
+        db.commit()
+    except Exception as e:
+        print('Exception: {}'.format(e))
+    close_db()
+    if consulta[0][0] is None:
+        idslistadeseo = [variable]
+    else:
+        idslistadeseo=armarlista(consulta[0][0])
+        idslistadeseo.append(variable)
+    idsguardar = armarcadena(idslistadeseo)
+    db = get_db()
+    try:
+        consulta = db.execute('update usuarios set listadeseo = ? where usuario = "prueba2";',(idsguardar,)).fetchall()
+        db.commit()
+    except Exception as e:
+        print('Exception: {}'.format(e))
+    close_db()    
+    
     #session['lista']= []
     #session['lista'].append(productoclickeado)
     return '',204
