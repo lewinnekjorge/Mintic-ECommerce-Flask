@@ -228,7 +228,7 @@ def agregaralista(variable):
     idsguardar = armarcadena(idslistadeseo)
     db = get_db()
     try:
-        consulta = db.execute('update usuarios set listadeseo = ? where usuario = "prueba2";',(idsguardar,)).fetchall()
+        consulta = db.execute('update usuarios set listadeseo = ? where usuario = ?;',(idsguardar,session['usuario'],)).fetchall()
         db.commit()
     except Exception as e:
         print('Exception: {}'.format(e))
@@ -254,7 +254,7 @@ def logout():
     session.clear()
     return redirect(url_for('main.home'))
 
-@main.route( '/productos/<variable>', methods = ['GET'])
+@main.route( '/productos/<variable>', methods = ['GET','POST'])
 def detalleproducto(variable):
     """Función de prueba.
     """

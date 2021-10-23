@@ -29,12 +29,7 @@ class producto:
     
         if len(args) == 1:
             self.id,self.nombre, self.tipo, self.talla, self.precio, self.img = asignaciones(args,0)
-        #    self.id = args[0][0]
-        #    self.nombre = args[0][1]
-        #    self.tipo = args[0][2]
-        #    self.talla = args[0][3]
-        #    self.precio = args[0][4]
-        #    self.img = args[0][5]
+
 
 class itemcompra:
     def __init__(self, producto):

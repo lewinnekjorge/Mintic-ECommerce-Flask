@@ -13,13 +13,13 @@ misproductos = productosfromlista(listica)
 #for produco in misproductos:
 #    print(produco.nombre)
 
-ids = [('1113,1112,1111,1112,1112',)]
+ids = ['1113', '1112', '1111', '1112', '1112']
 
-#cadena = armarcadena(ids)
+cadena = armarcadena(ids)
 
-newids = armarlista(ids[0][0])
+#newids = armarlista(ids)
 
-print(newids)
+print(cadena)
 
 
 """
