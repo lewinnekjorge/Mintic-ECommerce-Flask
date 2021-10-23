@@ -37,7 +37,7 @@
                 </div>
                 {% endfor %}
                 <a class="back-to-shop text-muted" style= "cursor: pointer;" onclick= "history.back()">&leftarrow;Back to shop</a>
-            </div> <button class="btn btn-secondary">AGREGAR AL CARRITO</button>
+            </div> <a href = "{{url_for('main.enviaracarrito', variable = listadeseo)}}" class="btn btn-secondary">AGREGAR AL CARRITO</button></a>
             </div>
             </div>
         </div>

@@ -6,6 +6,7 @@ from formularios import *
 from werkzeug.security import check_password_hash, generate_password_hash
 from db import *
 from markupsafe import escape
+import sqlite3
 
 main= blueprints.Blueprint('main', __name__)
 
@@ -35,7 +36,6 @@ def home():
     """
     consulta = statementosmany('select * from productos order by random()',4) #función inventada para reducir espacio
     misproductos = productosfromlista(consulta) #función inventada para crear vector de productos from lista
-    print(misproductos)
     return render_template('index.html', misproductos=misproductos)
 
 @main.route( '/login/', methods = ['GET','POST'])
@@ -65,7 +65,6 @@ def login():
                         session['tipousuario'] = consultabd[3]
                         session['balance'] = consultabd[4]
                         session['boologeado'] = True
-                        session['listadeseo'] = []
                         return redirect(url_for('main.profile'))
                 else:
                     flash('Usuario o contraseña errados','errordelogin')
@@ -141,9 +140,27 @@ def product():
 def cart():
     """Función que maneja el carrito de compras.
     """
-
-
-    return render_template('shoppingcart.html')
+    carrito = []
+    total = 0
+    db = get_db()
+    try:
+        consulta = db.execute('select carrito from usuarios where usuario = ?',(session['usuario'],)).fetchall()
+        db.commit()
+    except Exception as e:
+        print('Exception: {}'.format(e))
+    close_db()
+    if consulta[0][0] != None:
+        newids = armarlista(consulta[0][0]) #Se debe tomar el primer valor del primer vector de la consulta
+        for ids in newids:
+            productoclickeado = producto(productclicked(ids))
+            total = total + float(productoclickeado.precio)
+            item = itemcompra(productoclickeado)
+            carrito.append(item)
+    if total == 0:
+        totaldomi = 0
+    else:
+        totaldomi = total + 10000
+    return render_template('shoppingcart.html', carrito = carrito, total = total, totaldomi=totaldomi)
 
 @main.route( '/contacto/', methods = ['GET','POST'])
 def contacto():
@@ -173,8 +190,23 @@ def wish():
             item = itemcompra(productoclickeado)
             listadeseo.append(item)
     
+    
     return render_template('wishlist.html', listadeseo = listadeseo)
 
+@main.route( '/wish/enviaracarrito', methods = ['GET','POST'])
+@login_required
+def enviaracarrito():
+    """Función que envia la lista de deseos al carrito
+    """
+    db = get_db()
+    try:
+        db.execute('update usuarios set carrito = COALESCE(carrito||",","") || listadeseo where usuario = ?',(session['usuario'],)).fetchall()
+        db.execute('update usuarios set listadeseo = NULL where usuario = ?',(session['usuario'],)).fetchall()
+        db.commit()
+    except Exception as e:
+        print('Exception: {}'.format(e))
+    close_db()
+    return redirect(url_for('main.cart'))
 
 @main.route( '/agregar/<variable>', methods = ['GET','POST'])
 @login_required
