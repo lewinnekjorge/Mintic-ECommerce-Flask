@@ -31,8 +31,12 @@
                             <div class="row text-muted">{{ item.producto.tipo }}</div>
                             <div class="row">{{ item.producto.nombre }}</div>
                         </div>
-                        <div class="col"> <a href="#">-</a><a href="#" class="border">{{ item.cantidad }}</a><a href="#">+</a> </div>
-                        <div class="col">&dollar;{{ item.subtotal }} <span class="close">&#10005;</span></div>
+                        <!--<div class="col"> <a href="#">-</a><a href="#" class="border">{{ item.cantidad }}</a><a href="#">+</a> </div>-->
+                        <div class="col align-self-center">
+                            <div class="row justify-content-center text-muted">Cantidad</div>
+                            <div class="row justify-content-center">{{ item.cantidad }}</div>
+                        </div>
+                        <div class="col">&dollar;{{ item.subtotal }} <a href= "{{url_for('main.eliminarlistadeseo', variable = item.producto.id)}}"><img class = "img-fluid" style= "width:10%; padding:1%" src= "{{ url_for('static', filename='img/cancel.png') }}" title = "Borrar Item"></div></a>
                     </div>
                 </div>
                 {% endfor %}

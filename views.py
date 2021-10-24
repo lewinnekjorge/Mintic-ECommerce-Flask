@@ -200,13 +200,141 @@ def enviaracarrito():
     """
     db = get_db()
     try:
-        db.execute('update usuarios set carrito = COALESCE(carrito||",","") || listadeseo where usuario = ?',(session['usuario'],)).fetchall()
-        db.execute('update usuarios set listadeseo = NULL where usuario = ?',(session['usuario'],)).fetchall()
+        vlistadeseo = db.execute('select listadeseo from usuarios where usuario = ?',(session['usuario'],)).fetchone()
         db.commit()
     except Exception as e:
         print('Exception: {}'.format(e))
     close_db()
+    print(vlistadeseo[0]==None)
+    if (vlistadeseo[0] != None):
+        print('ENTRO AQUI')
+        db = get_db()
+        try:
+            db.execute('update usuarios set carrito = COALESCE(carrito||",","") || listadeseo where usuario = ?',(session['usuario'],)).fetchall()
+            db.execute('update usuarios set listadeseo = NULL where usuario = ?',(session['usuario'],)).fetchall()
+            db.commit()
+        except Exception as e:
+            print('Exception: {}'.format(e))
+        close_db()
     return redirect(url_for('main.cart'))
+
+@main.route( '/cart/<variable>', methods = ['GET','POST'])
+@login_required
+def agregaracarro(variable):
+    """Función que permite agregar productos al carrito
+    """
+    db = get_db()
+    try:
+        consulta = db.execute('select carrito from usuarios where usuario = ?',(session['usuario'],)).fetchall()
+        db.commit()
+    except Exception as e:
+        print('Exception: {}'.format(e))
+    close_db()
+    if consulta[0][0] is None:
+        idslistadeseo = [variable]
+    else:
+        idslistadeseo=armarlista(consulta[0][0])
+        idslistadeseo.append(variable)
+    idsguardar = armarcadena(idslistadeseo)
+    db = get_db()
+    try:
+        consulta = db.execute('update usuarios set carrito = ? where usuario = ?;',(idsguardar,session['usuario'],)).fetchall()
+        db.commit()
+    except Exception as e:
+        print('Exception: {}'.format(e))
+    close_db()    
+    
+    #session['lista']= []
+    #session['lista'].append(productoclickeado)
+    return '',204
+
+@main.route( '/cart/borrar/<variable>', methods = ['GET','POST'])
+@login_required
+def eliminarcarro(variable):
+    """Función que permite eliminar productos del carrito de compras
+    """
+    db = get_db()
+    try:
+        consulta = db.execute('select carrito from usuarios where usuario = ?',(session['usuario'],)).fetchall()
+        db.commit()
+    except Exception as e:
+        print('Exception: {}'.format(e))
+    close_db()
+    idscarro=armarlista(consulta[0][0])
+    idscarro.remove(variable)
+    if len(idscarro) == 0:
+        idsguardar = None
+    else:
+        idsguardar = armarcadena(idscarro)
+    
+    db = get_db()
+    try:
+        consulta = db.execute('update usuarios set carrito = ? where usuario = ?;',(idsguardar,session['usuario'],)).fetchall()
+        db.commit()
+    except Exception as e:
+        print('Exception: {}'.format(e))
+    close_db()    
+    
+    return '',204
+
+@main.route( '/wish/borrar/<variable>', methods = ['GET','POST'])
+@login_required
+def eliminarlistadeseo(variable):
+    """Función que permite eliminar productos del carrito de compras
+    """
+    db = get_db()
+    try:
+        consulta = db.execute('select listadeseo from usuarios where usuario = ?',(session['usuario'],)).fetchall()
+        db.commit()
+    except Exception as e:
+        print('Exception: {}'.format(e))
+    close_db()
+    idslista=armarlista(consulta[0][0])
+    idslista.remove(variable)
+    if len(idslista) == 0:
+        idsguardar = None
+    else:
+        idsguardar = armarcadena(idslista)
+    
+    db = get_db()
+    try:
+        consulta = db.execute('update usuarios set listadeseo = ? where usuario = ?;',(idsguardar,session['usuario'],)).fetchall()
+        db.commit()
+    except Exception as e:
+        print('Exception: {}'.format(e))
+    close_db()    
+    
+    return '',204
+
+@main.route( '/cart/comprar/<variable>', methods = ['GET','POST'])
+@login_required
+def comprar(variable):
+    """Método para completar la compra de los productos
+    """
+    db = get_db()
+    try:
+        consulta = db.execute('select carrito, balance from usuarios where usuario = ?',(session['usuario'],)).fetchall()
+        db.commit()
+    except Exception as e:
+        print('Exception: {}'.format(e))
+    close_db()
+    idscompra=armarlista(consulta[0][0]) #id de productos comprados para procesos no implementados
+    balance = consulta[0][1]
+    idsguardar = None
+    print(balance)
+    print(idscompra)
+    print(variable)
+    db = get_db()
+    try:
+        consulta = db.execute('update usuarios set carrito = ? where usuario = ?;',(idsguardar,session['usuario'],)).fetchall()
+        db.commit()
+    except Exception as e:
+        print('Exception: {}'.format(e))
+    close_db()    
+    
+    return '',204
+
+
 
 @main.route( '/agregar/<variable>', methods = ['GET','POST'])
 @login_required
@@ -237,7 +365,6 @@ def agregaralista(variable):
     #session['lista']= []
     #session['lista'].append(productoclickeado)
     return '',204
-
 
 @main.route( '/calificacion/', methods = ['GET','POST'])
 def calificacion():

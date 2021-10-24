@@ -29,12 +29,17 @@
                             <div class="row text-muted">{{ item.producto.tipo }}</div>
                             <div class="row">{{ item.producto.nombre }}</div>
                         </div>
-                        <div class="col"> <a href="#">-</a><a href="#" class="border">{{ item.cantidad }}</a><a href="#">+</a> </div>
-                        <div class="col">&dollar; {{ item.subtotal }} <span class="close">&#10005;</span></div>
+                        <!--<div class="col"> <a href="#">-</a><a href="#" class="border">{{ item.cantidad }}</a><a href="#">+</a> </div>-->
+                        <div class="col align-self-center">
+                            <div class="row justify-content-center text-muted">Cantidad</div>
+                            <div class="row justify-content-center">{{ item.cantidad }}</div>
+                        </div>
+                        <div class="col">&dollar; {{ item.subtotal }} 
+                            <a href= "{{url_for('main.eliminarcarro', variable = item.producto.id)}}"><img class = "img-fluid" style= "width:10%; padding:1%" src= "{{ url_for('static', filename='img/cancel.png') }}" title = "Borrar Item"></div></a>
                     </div>
                 </div>
                 {% endfor %}
-                <a class="back-to-shop text-muted" style= "cursor: pointer;" onclick= "history.back()">&leftarrow;Back to shop</a>
+                <a class="back-to-shop text-muted" style= "cursor: pointer;" href= "{{url_for('main.product')}}">&leftarrow;Back to shop</a>
             </div>
             <div class="col-md-4 summary">
                 <div>
@@ -53,7 +58,7 @@
                 <div class="row" style="border-top: 1px solid rgba(0,0,0,.1); padding: 2vh 0;">
                     <div class="col">TOTAL PRICE</div>
                     <div class="col text-right">{{ "$%.0f"|format(totaldomi|float)}}</div>
-                </div> <button class="btn btn-secondary">COMPRAR</button>
+                </div><a href="{{url_for('main.comprar', variable = totaldomi)}}" class="btn btn-secondary">COMPRAR</a>
             </div>
         </div>
     </div>
