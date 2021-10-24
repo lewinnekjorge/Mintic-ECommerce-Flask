@@ -112,7 +112,7 @@ def profile():
 
     return render_template('profile.html', formedit = formedit)
 
-@main.route( '/productos/', methods = ['GET','POST'])
+@main.route( '/productos/', methods = ['GET'])
 def product():
     """Función de producto.
     """
@@ -334,8 +334,6 @@ def comprar(variable):
     
     return '',204
 
-
-
 @main.route( '/agregar/<variable>', methods = ['GET','POST'])
 @login_required
 def agregaralista(variable):
@@ -374,7 +372,7 @@ def calificacion():
 
     return render_template('calificaciones.html')
 
-@main.route( '/logout/', methods = ['GET','POST'])
+@main.route( '/logout/', methods = ['GET'])
 def logout():
     """Función que permite salir de la sesión.
     """
