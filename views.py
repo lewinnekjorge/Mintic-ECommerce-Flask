@@ -100,7 +100,6 @@ def profile():
     """
     formedit = formeditar()
     if request.method == "POST":
-        print("LO QUE SEAAAAAA")
         if request.form.get("guardar"):
             db = get_db()
             try:
