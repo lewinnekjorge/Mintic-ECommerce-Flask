@@ -1,6 +1,6 @@
 import functools
 from os import error
-from flask import Flask, render_template, blueprints, request, redirect, url_for, session, flash
+from flask import Flask, render_template, blueprints, request, redirect, url_for, session, flash, jsonify
 from classes import *
 from formularios import *
 from werkzeug.security import check_password_hash, generate_password_hash
@@ -41,7 +41,7 @@ def home():
 @main.route( '/login/', methods = ['GET','POST'])
 @login_done
 def login():
-    """Función de prueba formularios wtf.
+    """Función de login y registro con formularios wtf.
     """
     formlogin = formularioLogin()
     formregister = formularioRegistro()
@@ -77,7 +77,6 @@ def login():
                 regclave = escape(request.form["regclave"])
                 tipousuario = "usuario"
                 balance = 0
-                print(regusuario,regclave)
                 #Se hace hash a la clave
                 regclave = regclave + regusuario #salt agregada
                 regclave = generate_password_hash(regclave)                
@@ -86,10 +85,11 @@ def login():
                 try:
                     db.execute("insert into usuarios (usuario,nombre, clave, tipousuario,balance) values( ?, ?, ?, ?, ?)",(regusuario, regnombre, regclave, tipousuario,balance))
                     db.commit()
+                    flash('Su usuario ha sido registrado exitosamente, por favor inicie sesión','exitoso')
                 except Exception as e:
                     print('Exception: {}'.format(e))
+                    flash('El usuario escrito ya se encuentra en nuestra base de datos','errorderegistro')
                 close_db()
-                flash('Su usuario ha sido registrado exitosamente')
                 return redirect(url_for('main.login')) 
     return render_template('loginwtf.html', formlogin = formlogin, formregister = formregister)
 
@@ -274,37 +274,42 @@ def eliminarcarro(variable):
     except Exception as e:
         print('Exception: {}'.format(e))
     close_db()    
+    session['confi'] = 'cart'
     
-    return '',204
+    return redirect(url_for('main.prueba'))
 
 @main.route( '/wish/borrar/<variable>', methods = ['GET','POST'])
 @login_required
 def eliminarlistadeseo(variable):
     """Función que permite eliminar productos del carrito de compras
     """
-    db = get_db()
     try:
-        consulta = db.execute('select listadeseo from usuarios where usuario = ?',(session['usuario'],)).fetchall()
-        db.commit()
+        db = get_db()
+        try:
+            consulta = db.execute('select listadeseo from usuarios where usuario = ?',(session['usuario'],)).fetchall()
+            db.commit()
+        except Exception as e:
+            print('Exception: {}'.format(e))
+        close_db()
+        idslista=armarlista(consulta[0][0])
+        idslista.remove(variable)
+        if len(idslista) == 0:
+            idsguardar = None
+        else:
+            idsguardar = armarcadena(idslista)
+        
+        db = get_db()
+        try:
+            consulta = db.execute('update usuarios set listadeseo = ? where usuario = ?;',(idsguardar,session['usuario'],)).fetchall()
+            db.commit()
+        except Exception as e:
+            print('Exception: {}'.format(e))
+        close_db()
     except Exception as e:
-        print('Exception: {}'.format(e))
-    close_db()
-    idslista=armarlista(consulta[0][0])
-    idslista.remove(variable)
-    if len(idslista) == 0:
-        idsguardar = None
-    else:
-        idsguardar = armarcadena(idslista)
+        pass
+    session['confi'] = 'wish'
     
-    db = get_db()
-    try:
-        consulta = db.execute('update usuarios set listadeseo = ? where usuario = ?;',(idsguardar,session['usuario'],)).fetchall()
-        db.commit()
-    except Exception as e:
-        print('Exception: {}'.format(e))
-    close_db()    
-    
-    return '',204
+    return redirect(url_for('main.prueba'))
 
 @main.route( '/cart/comprar/<variable>', methods = ['GET','POST'])
 @login_required
@@ -321,17 +326,19 @@ def comprar(variable):
     idscompra=armarlista(consulta[0][0]) #id de productos comprados para procesos no implementados
     balance = consulta[0][1]
     idsguardar = None
-    print(balance)
-    print(idscompra)
-    print(variable)
+    #print(balance)
+    print(idscompra[0] == 'None')
+    #print(variable)
     db = get_db()
     try:
         consulta = db.execute('update usuarios set carrito = ? where usuario = ?;',(idsguardar,session['usuario'],)).fetchall()
         db.commit()
     except Exception as e:
         print('Exception: {}'.format(e))
-    close_db()    
-    
+    close_db()
+    if idscompra[0] != 'None':
+        session['confi'] = 'compra'
+        return redirect(url_for('main.prueba'))
     return '',204
 
 @main.route( '/agregar/<variable>', methods = ['GET','POST'])
@@ -381,8 +388,19 @@ def logout():
 
 @main.route( '/productos/<variable>', methods = ['GET','POST'])
 def detalleproducto(variable):
-    """Función de prueba.
+    """Función para visualizar los productos.
     """
     category = request.args.get('type')
     productoclickeado = producto(productclicked(variable)) #Método inventado en db.py para disminuir la cantidad de código en views.py
     return render_template('productdesc.html',product=productoclickeado)
+
+@main.route( '/prueba/', methods = ['GET'])
+def prueba():
+    """Función que permite salir de la sesión.
+    """
+    if session['confi'] == 'cart':
+        return redirect(url_for('main.cart'))
+    elif session['confi'] == 'wish':
+        return redirect(url_for('main.wish'))
+    elif session['confi'] == 'compra':
+        return render_template('thankyou.html')

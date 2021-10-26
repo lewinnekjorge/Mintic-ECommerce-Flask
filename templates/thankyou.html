@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block cuerpo %}
+<div class="jumbotron text-center" style="padding: 5%;">
+    <h1 class="display-3">Gracias por su Compra!</h1>
+    <p class="lead"><strong>En su email recibirá los detalles de su compra</strong></p>
+    <hr>
+    <p>
+      Problemas? <a href="{{url_for('main.contacto')}}">Contáctanos</a>
+    </p>
+    <p class="lead">
+      <a class="btn btn-secondary" href="{{url_for('main.home')}}" role="button">Continue to homepage</a>
+    </p>
+  </div>
+  {% endblock %}

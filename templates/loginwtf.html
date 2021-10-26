@@ -84,6 +84,20 @@
                                                 {% endfor %}
 				                        </div>
                                         <div class="d-grid gap-2" style= "padding-top: 10%; padding-bottom: 10%;">
+                                            {% with messages = get_flashed_messages(category_filter=['errorderegistro']) %}
+                                            {% if messages %}
+                                            {% for msg in messages %}
+                                            <span style="color: red" >{{msg}}</span>
+                                            {% endfor %}
+                                            {% endif %}
+                                            {% endwith %}
+                                            {% with messages = get_flashed_messages(category_filter=['exitoso']) %}
+                                            {% if messages %}
+                                            {% for msg in messages %}
+                                            <span style="color: greenyellow" >{{msg}}</span>
+                                            {% endfor %}
+                                            {% endif %}
+                                            {% endwith %}
                                             {{ formregister.registrarse(class = "btn btn-secondary") }}
                                         </div>
 				                    </form>
