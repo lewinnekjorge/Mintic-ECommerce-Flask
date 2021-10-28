@@ -20,9 +20,10 @@
                 <div class="titletan">
                     <div class="row">
                         <div class="col">
-                            <h4><b>Lista de Deseos</b></h4>
+                            <h4 class="text-center" style="padding-bottom: 2%;"><b>Lista de Deseos</b></h4>
                         </div>
                     </div>
+                {% if listadeseo|length >0 %}
                 {% for item in listadeseo %}
                 <div class="row border-top border-bottom">
                     <div class="row main align-items-center">
@@ -40,7 +41,13 @@
                     </div>
                 </div>
                 {% endfor %}
-                <a class="back-to-shop text-muted" style= "cursor: pointer;" onclick= "history.back()">&leftarrow;Back to shop</a>
+                {% else %}
+                <div class="text-center">
+                <img style ="width: 50%;"  src=https://www.ovsfashion.com/on/demandware.static/Sites-ovs-spagna-Site/-/default/dw5c078550/images/account/no-wishlist.svg>
+                </div>
+                {% endif %}
+                <div class = "spacer"></div>
+                <a class="back-to-shop text-muted" style= "cursor: pointer;" href= "{{url_for('main.product')}}">&leftarrow;Back to shop</a>
             </div> <a href = "{{url_for('main.enviaracarrito', variable = listadeseo)}}" class="btn btn-secondary">AGREGAR AL CARRITO</button></a>
             </div>
             </div>

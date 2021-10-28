@@ -136,6 +136,7 @@ def product():
     return render_template('product.html', productosportipo = productosportipo)
 
 @main.route( '/cart/', methods = ['GET','POST'])
+@login_required
 def cart():
     """Función que maneja el carrito de compras.
     """

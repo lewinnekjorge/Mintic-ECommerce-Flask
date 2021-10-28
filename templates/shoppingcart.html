@@ -8,6 +8,7 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/shopping.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/miCSS.css') }}">
 
   </head>
   <body style="background-image:url('/static/img/wallcart.jpg'); background-size: 1550px;">
@@ -22,6 +23,7 @@
                         <div class="col align-self-center text-right text-muted">{{carrito|length}} items</div>
                     </div>
                 </div>
+                {% if carrito|length >0 %}
                 {% for item in carrito %}
                 <div class="row border-top border-bottom">
                     <div class="row main align-items-center">
@@ -40,7 +42,11 @@
                     </div>
                 </div>
                 {% endfor %}
-                <a class="back-to-shop text-muted" style= "cursor: pointer;" href= "{{url_for('main.product')}}">&leftarrow;Back to shop</a>
+                {% else %}
+                <img class = "banner" src=https://www.99fashionbrands.com/wp-content/uploads/2020/12/empty_cart.png>
+                {% endif %}
+                <div class = "spacer"></div>
+                <a class="back-to-shop text-muted" style= "cursor: pointer;" href= "{{url_for('main.product')}}">&leftarrow; Back to shop</a>
             </div>
             <div class="col-md-4 summary">
                 <div>

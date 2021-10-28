@@ -42,7 +42,7 @@
                             </ul>
                         </div>
                     </div> -->
-                    <div class="buttons d-flex flex-row mt-5 gap-3"> <button class="btn btn-secondary">Agregar a Lista</button> <button class="btn btn-secondary">Agregar a Carro</button> </div>
+                    <div class="buttons d-flex flex-row mt-5 gap-3"> <a href="{{url_for('main.agregaralista', variable =product.id)}}" class="btn btn-secondary">Agregar a Lista</a> <a href="{{url_for('main.agregaracarro', variable =product.id)}}" class="btn btn-secondary">Agregar a Carro</a> </div>
                     <!-- <div class="search-option"> <i class='bx bx-search-alt-2 first-search'></i>
                         <div class="inputs"> <input type="text" name=""> </div> <i class='bx bx-share-alt share'></i>
                     </div> -->
