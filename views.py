@@ -423,9 +423,7 @@ def detalleproducto(variable):
 
         except:
             pass
-
-    
-    
+         
     return render_template('productdesc.html',product=productoclickeado)
 
 
