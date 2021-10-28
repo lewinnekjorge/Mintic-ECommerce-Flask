@@ -233,6 +233,12 @@ footer{
     text-align: center;
 }
 
+@media(max-width: 767px) {
+  .container {
+      width: auto;
+  }
+}
+
 .checked {
     color: orange;
 }
@@ -244,7 +250,6 @@ footer{
     color: #ec5109;
     padding-top: 20px;
 }
-
 
 /* -----------------------/CONTAINER-RATING STARS: PRODUCTDESC.HTML/------------------------------- */
 

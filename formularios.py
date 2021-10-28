@@ -9,9 +9,9 @@ class formularioLogin(FlaskForm):
     
 
 class formularioRegistro(FlaskForm):
-    regnombre = StringField('Nombre', validators=[InputRequired(message='Este campo no puede estar vacío'), Length(min=5,max=10, message = 'Este campo debe tener entre 5 y 10 caracteres'), Regexp('^\w+$',message='No usar caracteres especiales')])
-    regusuario = StringField('Usuario', validators=[InputRequired(message='Este campo no puede estar vacío'), Length(min=5,max=10, message = 'Este campo debe tener entre 5 y 10 caracteres'), Regexp('^\w+$',message='No usar caracteres especiales')])
-    regclave = PasswordField('Contraseña', validators=[InputRequired(message='Este campo no puede estar vacío'), Length(min=5,max=10, message = 'Este campo debe tener entre 5 y 10 caracteres'), Regexp('^\w+$',message='No usar caracteres especiales')])
+    regnombre = StringField('Nombre', validators=[InputRequired(message='Este campo no puede estar vacío'), Length(min=5,max=16, message = 'Este campo debe tener entre 5 y 10 caracteres'), Regexp('^[a-zA-Z0-9\s]+$',message='No usar caracteres especiales')])
+    regusuario = StringField('Usuario', validators=[InputRequired(message='Este campo no puede estar vacío'), Length(min=5,max=12, message = 'Este campo debe tener entre 5 y 10 caracteres'), Regexp('^\w+$',message='No usar caracteres especiales')])
+    regclave = PasswordField('Contraseña', validators=[InputRequired(message='Este campo no puede estar vacío'), Length(min=5,max=12, message = 'Este campo debe tener entre 5 y 10 caracteres'), Regexp('^\w+$',message='No usar caracteres especiales')])
     regclave2 = PasswordField('Confirmar Contraseña', validators=[InputRequired(message='Este campo no puede estar vacío'),EqualTo('regclave', message='Contraseñas deben ser iguales'), Regexp('^\w+$',message='No usar caracteres especiales')])
     registrarse = SubmitField('REGISTRATE')
 

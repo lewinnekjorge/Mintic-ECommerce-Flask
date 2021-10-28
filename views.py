@@ -1,5 +1,6 @@
 import functools
 from os import error
+from time import time
 from flask import Flask, render_template, blueprints, request, redirect, url_for, session, flash, jsonify
 from classes import *
 from formularios import *
@@ -7,6 +8,7 @@ from werkzeug.security import check_password_hash, generate_password_hash
 from db import *
 from markupsafe import escape
 import sqlite3
+import time
 
 main= blueprints.Blueprint('main', __name__)
 
@@ -43,6 +45,7 @@ def home():
 def login():
     """Función de login y registro con formularios wtf.
     """
+    success = False
     formlogin = formularioLogin()
     formregister = formularioRegistro()
     if request.method == 'POST':
@@ -85,12 +88,21 @@ def login():
                 try:
                     db.execute("insert into usuarios (usuario,nombre, clave, tipousuario,balance) values( ?, ?, ?, ?, ?)",(regusuario, regnombre, regclave, tipousuario,balance))
                     db.commit()
-                    flash('Su usuario ha sido registrado exitosamente, por favor inicie sesión','exitoso')
+                    success = True
                 except Exception as e:
                     print('Exception: {}'.format(e))
                     flash('El usuario escrito ya se encuentra en nuestra base de datos','errorderegistro')
                 close_db()
-                return redirect(url_for('main.login')) 
+                if success:
+                    flash('Su usuario ha sido registrado exitosamente!!, Serás redirigido ahora!','exitoso')
+                    session['usuario'] = regusuario
+                    session['nombre'] = regnombre
+                    session['tipousuario'] = tipousuario
+                    session['balance'] = balance
+                    session['boologeado'] = True
+                    return redirect(url_for('main.profile')) 
+                else:
+                    return redirect(url_for('main.login')) 
     return render_template('loginwtf.html', formlogin = formlogin, formregister = formregister)
 
 @main.route( '/profile/', methods = ['GET','POST'])
@@ -316,6 +328,7 @@ def eliminarlistadeseo(variable):
 def comprar(variable):
     """Método para completar la compra de los productos
     """
+    session.pop('_flashes', None)
     db = get_db()
     try:
         consulta = db.execute('select carrito, balance from usuarios where usuario = ?',(session['usuario'],)).fetchall()
@@ -326,18 +339,23 @@ def comprar(variable):
     idscompra=armarlista(consulta[0][0]) #id de productos comprados para procesos no implementados
     balance = consulta[0][1]
     idsguardar = None
-    #print(balance)
     print(idscompra[0] == 'None')
-    #print(variable)
     db = get_db()
-    try:
-        consulta = db.execute('update usuarios set carrito = ? where usuario = ?;',(idsguardar,session['usuario'],)).fetchall()
-        db.commit()
-    except Exception as e:
-        print('Exception: {}'.format(e))
-    close_db()
-    if idscompra[0] != 'None':
-        session['confi'] = 'compra'
+    if balance > float(variable):
+        try:
+            consulta = db.execute('update usuarios set carrito = ? where usuario = ?;',(idsguardar,session['usuario'],)).fetchall()
+            newbalance = balance - float(variable)
+            consulta = db.execute('update usuarios set balance = ? where usuario = ?;',(newbalance,session['usuario'],)).fetchall()            
+            db.commit()
+        except Exception as e:
+            print('Exception: {}'.format(e))
+        close_db()
+        if idscompra[0] != 'None':
+            session['confi'] = 'compra'
+            return redirect(url_for('main.prueba'))
+    else:
+        flash('Fondos Insuficientes','comprafalla')
+        session['confi'] = 'comprafalla'
         return redirect(url_for('main.prueba'))
     return '',204
 
@@ -404,3 +422,5 @@ def prueba():
         return redirect(url_for('main.wish'))
     elif session['confi'] == 'compra':
         return render_template('thankyou.html')
+    elif session['confi'] == 'comprafalla':
+        return redirect(url_for('main.cart'))

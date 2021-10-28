@@ -20,7 +20,7 @@
             <a class="navbar-brand d-none d-lg-inline-block" href="{{url_for('main.home')}}"> 
               <h3 style="color:rgb(67, 67, 67)">&emsp;&emsp;ARMANI</h3></a>
         </div>
-        <div>
+        <div style = "padding-right: 15%;">
         <ul class = "nav">
             <li class="nav">
               {% if session['boologeado'] != True %}
@@ -35,8 +35,8 @@
             </li>
             </ul>
         </div>
-        <div class="collapse navbar-collapse flex-grow-1 text-right" id="myNavbar">
-            <ul class="navbar-nav ms-auto flex-nowrap">
+        <div class="text-right" id="myNavbar">
+            <ul class="navbar-nav ms-auto">
                 <li class="nav-item">
                     <a href="{{url_for('main.contacto')}}" class="nav-link m-2 menu-item nav-active">Acerca de Nosotros</a>
                 </li>
