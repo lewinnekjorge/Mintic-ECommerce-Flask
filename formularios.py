@@ -20,3 +20,7 @@ class formeditar(FlaskForm):
     editusuario = StringField('Usuario', validators=[InputRequired(message='Este campo no puede estar vacío')])
     guardar = SubmitField('Guardar')
 
+class formcalificar(FlaskForm):
+    calificacion = StringField('Calificacion')
+    comentarios = StringField('Comentarios')
+    calificar = SubmitField('Calificar')

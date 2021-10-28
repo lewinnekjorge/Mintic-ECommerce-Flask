@@ -393,6 +393,9 @@ def agregaralista(variable):
 def calificacion():
     """Función que  maneja las páginas de las calificaciones.
     """
+    formScore = formcalificar()
+
+    #request.form.get("registrarse"):
     
 
     return render_template('calificaciones.html')
@@ -416,14 +419,22 @@ def detalleproducto(variable):
         try:
         #if session['usuario'] != None:
             print('Lo que sea')  
+            user = session['usuario']
+            product = productoclickeado.id
             score = request.form.get('rate')
             comentario = request.form['comentario'] 
-            print(score, comentario, session['usuario'], productoclickeado.id)
+            print(score, comentario, user, product)
+
+            db = get_db()
+            db.execute("insert into calificaciones (usuario, producto, puntaje, comentarios) values(?, ?, ?, ?)", (user, product, score, comentario))
+            db.commit()
+            success = True
+
         #else:
 
         except:
             pass
-         
+
     return render_template('productdesc.html',product=productoclickeado)
 
 
