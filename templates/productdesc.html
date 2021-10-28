@@ -39,55 +39,35 @@
                         <div class="inputs"> <input type="text" name=""> </div> <i class='bx bx-share-alt share'></i>
                     </div> -->
                 </div>
-                <div class="ratings d-flex flex-row align-items-center" style="padding: 5%;">
-                  <!-- <div class="d-flex flex-row"> -->
+                
+              <div class="container" style="padding: 5%;">
+                <h4>Calificar este Producto</h4>
+                <form name="formCalificacion" role="form" method="POST" class="login-form">
+ 
+                  <label for="rating">Score:</label>
+                  <select name="rate">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                  </select>
 
-                      <div class="container-ratingstar" style="background-color:gainsboro">
-                          <div class="post">
-                            <div class="text">Thanks for rating us!</div>
-                            <div class="edit">EDIT</div>
-                          </div>
-                          <div class="star-widget">
-                            <input type="radio" name="rate" id="rate-5">
-                            <label for="rate-5" class="fas fa-star"></label>
-                            <input type="radio" name="rate" id="rate-4">
-                            <label for="rate-4" class="fas fa-star"></label>
-                            <input type="radio" name="rate" id="rate-3">
-                            <label for="rate-3" class="fas fa-star"></label>
-                            <input type="radio" name="rate" id="rate-2">
-                            <label for="rate-2" class="fas fa-star"></label>
-                            <input type="radio" name="rate" id="rate-1">
-                            <label for="rate-1" class="fas fa-star"></label>
-                            <form action="#">
-                              <header></header>
-                              <div class="textarea">
-                                <textarea cols="30" placeholder="Describe your experience.."></textarea>
-                              </div>
-                              <div class="btn">
-                                <button type="submit">Calificar</button>
-                              </div>
-                            </form>
-                          </div>
-                        </div>
+                    <div class="spacer"></div>
 
-                        <script>
-                          const btn = document.querySelector("button");
-                          const post = document.querySelector(".post");
-                          const widget = document.querySelector(".star-widget");
-                          const editBtn = document.querySelector(".edit");
-                          btn.onclick = ()=>{
-                            widget.style.display = "none";
-                            post.style.display = "block";
-                            editBtn.onclick = ()=>{
-                              widget.style.display = "block";
-                              post.style.display = "none";
-                            }
-                            return false;
-                          }
-                        </script>
+                  <div class="mb-3">
+                    <label for="exampleFormControlTextarea1" class="form-label">Comentarios:</label>
+                    <textarea class="form-control" id="formmensaje" rows="3" name="comentario"></textarea>
+                    <p class="warnings" id="warnings3"></p>
+                  </div>
 
-                  <!-- </div> -->
+                  <input class="btn btn-secondary" type="submit">
+                </form>
               </div>
+
+
+
+
             </div>
         </div>
     </div>

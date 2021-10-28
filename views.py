@@ -410,7 +410,25 @@ def detalleproducto(variable):
     """
     category = request.args.get('type')
     productoclickeado = producto(productclicked(variable)) #Método inventado en db.py para disminuir la cantidad de código en views.py
+
+    if request.method == 'POST':
+
+        try:
+        #if session['usuario'] != None:
+            print('Lo que sea')  
+            score = request.form.get('rate')
+            comentario = request.form['comentario'] 
+            print(score, comentario, session['usuario'], productoclickeado.id)
+        #else:
+
+        except:
+            pass
+
+    
+    
     return render_template('productdesc.html',product=productoclickeado)
+
+
 
 @main.route( '/prueba/', methods = ['GET'])
 def prueba():
