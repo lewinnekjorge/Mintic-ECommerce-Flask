@@ -1,0 +1,39 @@
+{% extends 'baseadmin.html' %}
+{% block cuerpo %}
+	<!-- pageContent -->
+	<section class="full-width pageContent">
+		<div class="full-width divider-menu-h"></div>
+		<div class="mdl-grid">
+			<div class="mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--12-col-desktop">
+				<table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp full-width table-responsive">
+					<thead>
+						<tr>
+							<th class="mdl-data-table__cell--non-numeric">Name</th>
+							<th class = "text-center">ID</th>
+							<th class = "text-center">Producto</th>
+							<th class = "text-center">Tipo</th>
+							<th class = "text-center">Precio</th>
+							<th class = "text-center">Imagen</th>
+							<th class = "text-center">Borrar</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for producto in productos %}
+						<tr>
+							<td class="mdl-data-table__cell--non-numeric">{{ producto.nombre }}</td>
+							<td class = "text-center">{{ producto.id }}</td>
+							<td class = "text-center">{{ producto.tipo }}</td>
+							<td class = "text-center">{{producto.talla}}</td>
+							<td class = "text-center">{{producto.precio}}</td>
+							<td class = "text-center"><a href={{ producto.img }}>img</a></td>
+							<td class = "text-center"><a href="{{url_for('main.borrarproducto', variable = producto.id )}}"><i class="zmdi zmdi-delete"></i></a></td>
+						</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</section>
+</body>
+</html>
+{% endblock %}

@@ -31,21 +31,21 @@
                 <div class="col">
                     <h1 style="padding-bottom:0%;"></h1>
                   
-                    <h5 class="name" style="font-size: large;"><a href="javascript:login('show');">
-                    <img class = "img-fluid" style= "width:10%" src= "{{ url_for('static', filename='img/wallet.png') }}">{{ "$%.0f"|format(session['balance']|float) }}</a></h5>
+                    <a style="text-decoration:none;  color:black" href="javascript:login('show');">
+                    <img class = "img-fluid" style= "width:10%;" src= "{{ url_for('static', filename='img/wallet.png') }}">{{ "$%.0f"|format(session['balance']|float) }}</a>
                 </div>
             </div>
         </div>
-        <div id="popupbox"> 
-            <form name="balancea" role="form" method="POST" class="form">
+        <div id="popupbox" class = "text-center"> 
+            <form name="balancea" role="form" method="POST" class="login-form">
             
-            <center>Balance a acreditar:</center>
-            <center><input name="balancee" size="14" /></center>
-            <center><button  type="submit" name="submit" >ENVIAR</button></center>
-            
+            <p class = "text-center">Balance a acreditar:</p>
+            <input class="mdl-textfield__input" type="number"  placeholder = "Agregue balance" name="numbala">   
+            <input class="btn btn-secondary" style="width: 50%;" type="submit" name="cambiarbalance">
+         
             </form>
             <br />
-            <center><a href="javascript:login('hide');">close</a></center> 
+            <a href="javascript:login('hide');">close</a> 
             
             </div> 
         <div class="container mt-3 p-2">

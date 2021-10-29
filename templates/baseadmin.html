@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Administrators</title>
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/normalize.css') }}"/>
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/material.min.css') }}"/>
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/material-design-iconic-font.min.css') }}"/>
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/jquery.mCustomScrollbar.css') }}"/>
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}"/>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-uWxY/CJNBR+1zjPWmfnSnVxwRheevXITnMqoEIeG1LJrdI0GlVs/9cVSyPYXdcSF" crossorigin="anonymous">
+
+</head>
+<body>
+	<!-- navBar -->
+	<div class="full-width navBar">
+		<div class="full-width navBar-options">
+			<nav class="navBar-options-list">
+				<ul class="list-unstyle">
+					<li class="btn-exit" id="btn-exit">
+						<i class="zmdi zmdi-power"></i>
+						<div class="mdl-tooltip" for="btn-exit">LogOut</div>
+					</li>
+					<li class="text-condensedLight noLink" ><small>User Name</small></li>
+					<li class="noLink">
+						<figure>
+							<img src="{{ url_for('static', filename='img/avatar-male.png') }}" class="img-fluid" alt="...">
+						</figure>
+					</li>
+				</ul>
+			</nav>
+		</div>
+	</div>
+	<!-- navLateral -->
+	<section class="full-width navLateral">
+		<div class="full-width navLateral-bg btn-menu"></div>
+		<div class="full-width navLateral-body">
+			<div class="full-width navLateral-body-logo text-center tittles">
+				<i class="zmdi zmdi-close btn-menu"></i> Armani 
+			</div>
+			<figure class="full-width" style="height: 77px;">
+				<div class="navLateral-body-cl">
+					<img src="{{ url_for('static', filename='img/avatar-male.png') }}" class="img-fluid" alt="...">
+				</div>
+				<figcaption class="navLateral-body-cr hide-on-tablet">
+					<span>
+						Full Name Admin<br>
+						<small>Admin</small>
+					</span>
+				</figcaption>
+			</figure>
+			<div class="full-width tittles navLateral-body-tittle-menu">
+				<i class="zmdi zmdi-desktop-mac"></i><span class="hide-on-tablet">&nbsp; Dashboard</span>
+			</div>
+			<nav class="full-width">
+				<ul class="full-width list-unstyle menu-principal">
+					<li class="full-width">
+						<a href="{{url_for('main.home')}}" class="full-width">
+							<div class="navLateral-body-cl">
+								<i class="zmdi zmdi-view-dashboard"></i>
+							</div>
+							<div class="navLateral-body-cr hide-on-tablet">	
+								HOME
+							</div>
+						</a>
+					</li>
+					<li class="full-width divider-menu-h"></li>
+					<li class="full-width">
+						<a href="{{url_for('main.gestionusuario')}}" class="full-width btn-subMenu">
+							<div class="navLateral-body-cl">
+								<i class="zmdi zmdi-face"></i>
+							</div>
+							<div class="navLateral-body-cr hide-on-tablet">
+								USERS
+							</div>
+						</a>
+					</li>
+					<li class="full-width divider-menu-h"></li>
+					<li class="full-width">
+						<a href="{{url_for('main.gestionproducto')}}" class="full-width">
+							<div class="navLateral-body-cl">
+								<i class="zmdi zmdi-washing-machine"></i>
+							</div>
+							<div class="navLateral-body-cr hide-on-tablet">
+								PRODUCTS
+							</div>
+						</a>
+					</li>
+					<li class="full-width divider-menu-h"></li>
+					<li class="full-width">
+						<a href="{{url_for('main.inventory')}}" class="full-width">
+							<div class="navLateral-body-cl">
+								<i class="zmdi zmdi-store"></i>
+							</div>
+							<div class="navLateral-body-cr hide-on-tablet">
+								INVENTORY
+							</div>
+						</a>
+					</li>
+				</ul>
+			</nav>
+		</div>
+	</section>
+    {% block cuerpo %} {% endblock %}

@@ -111,36 +111,24 @@ def profile():
     """Función que maneja el perfil de la página.
     """
     formedit = formeditar()
+    balanceagregado=0
+    balanceanterior = session['balance']
     if request.method == "POST":
-        if request.form.get("guardar"):
+        if request.form.get("cambiarbalance"):
+            balanceagregado = request.form['numbala']
+            balancenuevo = balanceanterior + float(balanceagregado)
             db = get_db()
             try:
-                db.execute("update usuario set nombre = ? where usuarios = ?",(request.form['editnombre'], session['usuario'],))
+                db.execute('update usuarios set balance = ? where usuario = ?',(balancenuevo,session['usuario'])).fetchall()
                 db.commit()
+                session['balance'] = balancenuevo
             except Exception as e:
                 print('Exception: {}'.format(e))
             close_db()
+            session['confi'] = 'balanceadd'
+            return redirect(url_for('main.prueba'))
 
     return render_template('profile.html', formedit = formedit)
-
-@main.route( '/profile/', methods = ['GET','POST'])
-@login_required
-def balan():
-    """Función que maneja el balance del perfil de la página.
-    """
-    formbalan = balancea()
-    if request.method == "POST":
-        if request.form.get("enviar"):
-            db = get_db()
-            try:
-                db.execute("update usuario set balance = ? where usuarios = ?",(request.form['balanc'], session['usuario'],))
-                db.commit()
-            except Exception as e:
-                print('Exception: {}'.format(e))
-            close_db()
-
-    return render_template('profile.html', formbalan = formbalan)
-
 
 @main.route( '/productos/', methods = ['GET'])
 def product():
@@ -366,6 +354,7 @@ def comprar(variable):
             newbalance = balance - float(variable)
             consulta = db.execute('update usuarios set balance = ? where usuario = ?;',(newbalance,session['usuario'],)).fetchall()            
             db.commit()
+            session['balance'] = newbalance
         except Exception as e:
             print('Exception: {}'.format(e))
         close_db()
@@ -463,22 +452,14 @@ def detalleproducto(variable):
             close_db()
 
         except:
-            pass
-
-        #else:
-
-       
-        
+            pass 
 
     return render_template('productdesc.html',product=productoclickeado)
-
-
 
 @main.route( '/prueba/', methods = ['GET'])
 def prueba():
     """Función que permite salir de la sesión.
     """
-
     if session['confi'] == 'cart':
         return redirect(url_for('main.cart'))
     elif session['confi'] == 'wish':
@@ -489,7 +470,12 @@ def prueba():
         return redirect(url_for('main.cart'))
     elif session['confi'] == 'borrarcomentario':
         return redirect(url_for('main.calificacion'))
-
+    elif session['confi'] == 'balanceadd':
+        return redirect(url_for('main.profile'))
+    elif session['confi'] == 'modificarpermiso':
+        return redirect(url_for('main.gestionusuario'))
+    elif session['confi'] == 'borrarproducto':
+        return redirect(url_for('main.inventory'))
 
 
 @main.route( '/calificaciones/borrarcomentario/<variable>', methods = ['GET','POST'])
@@ -511,5 +497,109 @@ def borrarcomentario(variable):
     
     return redirect(url_for('main.prueba'))
 
-    
+@main.route( '/adminpage/', methods = ['GET','POST'])
+@login_required
+def gestionusuario():
+    """Función que  maneja la página de usuarios de administrador
+    """
+    db = get_db()
+    try:
+        consulta = db.execute('select * from usuarios').fetchall()
+        db.commit()
+    except Exception as e:
+        print('Exception: {}'.format(e))
+    close_db()
 
+    return render_template('admin.html', usuarios = consulta)
+
+@main.route( '/adminpage/inventory', methods = ['GET','POST'])
+@login_required
+def inventory():
+    """Función que  maneja el inventario de administrador
+    """
+    db = get_db()
+    try:
+        consulta = db.execute('select * from productos').fetchall()
+        db.commit()
+    except Exception as e:
+        print('Exception: {}'.format(e))
+    close_db()
+    misproductos = productosfromlista(consulta)
+    return render_template('inventory.html',productos = misproductos)
+
+@main.route( '/adminpage/productgestion', methods = ['GET','POST'])
+@login_required
+def gestionproducto():
+    """Función que permite agregar productos 
+    """
+    if request.method == 'POST':
+
+        id = request.form['idprod'] 
+        name = request.form['nameprod']
+        tipo = request.form['tipoprod'] 
+        talla = request.form['tallaprod']
+        precio = request.form['precioprod'] 
+        img = request.form['imgprod'] 
+        print(id, name, precio)
+
+        db = get_db()
+
+        try:
+            db.execute("insert into productos (id, producto, tipo, talla, precio, img) values(?, ?, ?, ?, ?, ?)", (id, name, tipo, talla,precio,img))
+            db.commit()
+        except Exception as e:
+            print('Exception: {}'.format(e))
+            flash('Producto no pudo ser agregado - Asegúrese que el ID no está repetido','errorprodad')
+        close_db()
+
+    return render_template('addproducts.html')
+
+@main.route( '/adminpage/<variable>', methods = ['GET','POST'])
+@login_required
+def modificarpermiso(variable):
+    """Función que  maneja la página de usuarios de administrador
+    """
+    usuario = request.args.get('type')
+    tipousuario = variable
+    db = get_db()
+
+    if tipousuario == "usuario":
+        nuevotipousuario = "administrador"
+        try:
+            consulta = db.execute('update usuarios set tipousuario = ? where usuario = ?', (nuevotipousuario,usuario,)).fetchall()
+            db.commit()
+
+        except Exception as e:
+            print('Exception: {}'.format(e))
+        close_db()
+
+    else:
+        nuevotipousuario = "usuario"
+        try:
+            consulta = db.execute('update usuarios set tipousuario = ? where usuario = ?', (nuevotipousuario,usuario,)).fetchall()
+            db.commit()
+
+        except Exception as e:
+            print('Exception: {}'.format(e))
+        close_db()
+            
+    session['confi'] = 'modificarpermiso'
+    
+    return redirect(url_for('main.prueba'))
+    
+@main.route( '/adminpage/borrarproducto/<variable>', methods = ['GET','POST'])
+@login_required
+def borrarproducto(variable):
+    productID = variable
+
+    db = get_db()
+    try:
+        consulta = db.execute('delete from productos where id = ?',(productID,)).fetchall()
+        db.commit()
+    except Exception as e:
+        print('Exception: {}'.format(e))
+    close_db()
+
+    session['confi'] = 'borrarproducto'
+    
+    return redirect(url_for('main.prueba'))

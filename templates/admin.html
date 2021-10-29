@@ -1,0 +1,46 @@
+{% extends 'baseadmin.html' %}
+{% block cuerpo %}
+	<!-- pageContent -->
+	<section class="full-width pageContent">
+		<section class="full-width header-well">
+			<div class="full-width header-well-icon">
+				<i class="zmdi zmdi-account"></i>
+			</div>
+			<div class="full-width text center header-well-text">
+				<p class="text-condensedLight">
+					ROLES Y PERMISOS DE USUARIOS
+				</p>
+			</div>
+		</section>
+			
+			<div class="mdl-tabs__panel" id="tabListAdmin">
+				<div class="mdl-grid">
+					<div class="mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--8-col-desktop mdl-cell--2-offset-desktop">
+						<div class="full-width panel mdl-shadow--2dp">
+							<div class="full-width panel-tittle bg-success text-center tittles">
+								Listado de Usuarios
+							</div>
+							<div class="full-width panel-content">
+								<div class="mdl-list">
+									{% for usuario in usuarios %}
+									<div class="mdl-list__item mdl-list__item--two-line">
+										<span class="mdl-list__item-primary-content">
+											<i class="zmdi zmdi-account mdl-list__item-avatar"></i>
+											<span>{{ loop.index }}.{{ usuario[1] }} - {{ usuario[0] }}</span>
+											<span class="mdl-list__item-sub-title">{{ usuario[3] }}</span>
+										</span>
+										<a class="mdl-list__item-secondary-action" href="{{url_for('main.modificarpermiso',type=usuario[0], variable =usuario[3] )}}" class="btn btn-secondary">Actualizar Permiso</a>
+									</div>
+									{% endfor %}
+									<li class="full-width divider-menu-h"></li>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+							
+		</div>
+	</section>
+</body>
+</html>
+{% endblock %}

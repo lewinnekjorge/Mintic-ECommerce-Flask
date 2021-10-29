@@ -1,0 +1,62 @@
+{% extends 'baseadmin.html' %}
+{% block cuerpo %}
+	<!-- pageContent -->
+	<section class="full-width pageContent">
+		<div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
+			<div class="mdl-tabs__panel is-active" id="tabNewProduct">
+				<div class="mdl-grid">
+					<div class="mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--12-col-desktop">
+						<div class="full-width panel mdl-shadow--2dp">
+							<div class="full-width panel-tittle bg-primary text-center tittles">
+								New Product
+							</div>
+							<div class="full-width panel-content">
+								<form name="formuproducto" role="form" method="POST">
+									<div class="mdl-grid">
+										<div class="mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--6-col-desktop">
+
+											<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+												<input class="mdl-textfield__input" type="number"  placeholder = "ID" name="idprod">
+											</div>
+											<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+												<input class="mdl-textfield__input" type="text" placeholder = "producto" name="nameprod">
+											</div>
+											<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+												<input class="mdl-textfield__input" type="text" placeholder = "tipo" name="tipoprod">
+											</div>
+										</div>
+										<div class="mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--6-col-desktop">
+											<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+												<input class="mdl-textfield__input" type="number" placeholder = "talla" name="tallaprod">
+											</div>
+											<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+												<input class="mdl-textfield__input" type="text" placeholder = "precio" name="precioprod">
+											</div>
+											<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+												<input class="mdl-textfield__input" type="text" placeholder = "img" name="imgprod">
+											</div>
+										</div>
+									</div>
+									{% with messages = get_flashed_messages(category_filter=['errorprodad']) %}
+										{% if messages %}
+										{% for msg in messages %}
+										<div class="alert alert-warning text-center" role="alert">
+											{{msg}}
+										</div>
+										{% endfor %}
+										{% endif %}
+										{% endwith %}
+									<p class="text-center">										
+										<button type="submit" class="btn btn-secondary" name="addprod">Agregar Producto</a>
+									</p>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+</body>
+</html>
+{% endblock %}

@@ -39,7 +39,7 @@
               {% endif %}
               &emsp;
               {% if session['tipousuario']== 'administrador' %}
-              <a href="#" class="btn btn-outline-secondary">Administrador</a>
+              <a href="{{url_for('main.gestionusuario')}}" class="btn btn-outline-secondary">Administrador</a>
               {% endif %}
             </li>
             </ul>
