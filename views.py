@@ -393,12 +393,22 @@ def agregaralista(variable):
 def calificacion():
     """Función que  maneja las páginas de las calificaciones.
     """
-    formScore = formcalificar()
+    scores = []
+    idProductos = []
+    db = get_db()
 
-    #request.form.get("registrarse"):
-    
+    try:
+        consulta = db.execute('select * from calificaciones where usuario = ?',(session['usuario'],)).fetchall()
+        db.commit
+    except Exception as e:
+        print('Exception: {}'.format(e))
 
-    return render_template('calificaciones.html')
+    close_db()
+
+    print(consulta)
+
+
+    return render_template('calificaciones.html', scores = consulta)
 
 @main.route( '/logout/', methods = ['GET'])
 def logout():
@@ -426,14 +436,22 @@ def detalleproducto(variable):
             print(score, comentario, user, product)
 
             db = get_db()
-            db.execute("insert into calificaciones (usuario, producto, puntaje, comentarios) values(?, ?, ?, ?)", (user, product, score, comentario))
-            db.commit()
-            success = True
 
-        #else:
+            try:
+                db.execute("insert into calificaciones (usuario, producto, puntaje, comentarios) values(?, ?, ?, ?)", (user, product, score, comentario))
+                db.commit()
+            except Exception as e:
+                print('Exception: {}'.format(e))
+
+            close_db()
 
         except:
             pass
+
+        #else:
+
+       
+        
 
     return render_template('productdesc.html',product=productoclickeado)
 
@@ -451,3 +469,14 @@ def prueba():
         return render_template('thankyou.html')
     elif session['confi'] == 'comprafalla':
         return redirect(url_for('main.cart'))
+
+
+
+@main.route( '/calificaciones/borrar/<variable>', methods = ['GET','POST'])
+@login_required
+def borrarcomentario(variable):
+
+    
+
+
+    return redirect(url_for('main.prueba'))
