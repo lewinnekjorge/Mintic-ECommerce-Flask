@@ -18,11 +18,11 @@
 		<div class="full-width navBar-options">
 			<nav class="navBar-options-list">
 				<ul class="list-unstyle">
-					<li class="btn-exit" id="btn-exit">
+					<a href="{{url_for('main.logout')}}" style="text-decoration: none;"><li class="btn-exit" id="btn-exit">
 						<i class="zmdi zmdi-power"></i>
 						<div class="mdl-tooltip" for="btn-exit">LogOut</div>
-					</li>
-					<li class="text-condensedLight noLink" ><small>User Name</small></li>
+					</li></a>
+					<li class="text-condensedLight noLink" ><small>{{ session['usuario'] }}</small></li>
 					<li class="noLink">
 						<figure>
 							<img src="{{ url_for('static', filename='img/avatar-male.png') }}" class="img-fluid" alt="...">
@@ -45,8 +45,8 @@
 				</div>
 				<figcaption class="navLateral-body-cr hide-on-tablet">
 					<span>
-						Full Name Admin<br>
-						<small>Admin</small>
+						{{ session['nombre'] }}<br>
+						<small>{{ session['usuario'] }}</small>
 					</span>
 				</figcaption>
 			</figure>
