@@ -491,3 +491,6 @@ def borrarcomentario(variable):
     session['confi'] = 'borrarcomentario'
     
     return redirect(url_for('main.prueba'))
+
+    
+

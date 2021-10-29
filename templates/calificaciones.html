@@ -10,7 +10,7 @@
 
     &nbsp;
 
-
+    {% if comentario|length >0 %}
     <div class="grid-container ms-5 ps-5">
         {% for score in scores %}
         <div>
@@ -96,6 +96,9 @@
         </div>
 
 
-        {% endfor %}          
-    </div> 
+        {% endfor %} 
+        {% else %}         
+        <img class = "banner" src=https://cdn.dribbble.com/users/888330/screenshots/2653750/media/b7459526aeb0786638a2cf16951955b1.png>
+        {% endif %}
+    </div>
 {% endblock %}
