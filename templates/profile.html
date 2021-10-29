@@ -30,11 +30,24 @@
                   </div>
                 <div class="col">
                     <h1 style="padding-bottom:0%;"></h1>
-                  <h5 class="name" style="font-size: large;">
-                    <img class = "img-fluid" style= "width:10%" src= "{{ url_for('static', filename='img/wallet.png') }}">{{ "$%.0f"|format(session['balance']|float) }}</h5>
+                  
+                    <h5 class="name" style="font-size: large;"><a href="javascript:login('show');">
+                    <img class = "img-fluid" style= "width:10%" src= "{{ url_for('static', filename='img/wallet.png') }}">{{ "$%.0f"|format(session['balance']|float) }}</a></h5>
                 </div>
             </div>
         </div>
+        <div id="popupbox"> 
+            <form name="balancea" role="form" method="POST" class="form">
+            
+            <center>Balance a acreditar:</center>
+            <center><input name="balancee" size="14" /></center>
+            <center><button  type="submit" name="submit" >ENVIAR</button></center>
+            
+            </form>
+            <br />
+            <center><a href="javascript:login('hide');">close</a></center> 
+            
+            </div> 
         <div class="container mt-3 p-2">
             <div class = "row" style="text-align: center;">
                 <div class="col">

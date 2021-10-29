@@ -24,3 +24,7 @@ class formcalificar(FlaskForm):
     calificacion = StringField('Calificacion')
     comentarios = StringField('Comentarios')
     calificar = SubmitField('Calificar')
+
+class balancea(FlaskForm):
+    balanc = StringField ('Balance')
+    enviar = SubmitField('Enviar')

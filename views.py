@@ -123,6 +123,25 @@ def profile():
 
     return render_template('profile.html', formedit = formedit)
 
+@main.route( '/profile/', methods = ['GET','POST'])
+@login_required
+def balan():
+    """Función que maneja el balance del perfil de la página.
+    """
+    formbalan = balancea()
+    if request.method == "POST":
+        if request.form.get("enviar"):
+            db = get_db()
+            try:
+                db.execute("update usuario set balance = ? where usuarios = ?",(request.form['balanc'], session['usuario'],))
+                db.commit()
+            except Exception as e:
+                print('Exception: {}'.format(e))
+            close_db()
+
+    return render_template('profile.html', formbalan = formbalan)
+
+
 @main.route( '/productos/', methods = ['GET'])
 def product():
     """Función de producto.

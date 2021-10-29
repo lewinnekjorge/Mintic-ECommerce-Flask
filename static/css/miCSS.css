@@ -391,3 +391,16 @@ form .btn button{
 form .btn button:hover{
   background: #1b1b1b;
 }
+#popupbox{
+  margin: 0; 
+  font-family: cursive;
+  font-weight: bold;
+  width: 20%; 
+  height: 150px; 
+  position: absolute; 
+  background: #fff; 
+  border: solid #000000 2px; 
+  z-index: 9; 
+  font-family: arial; 
+  visibility: hidden; 
+  }
