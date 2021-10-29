@@ -428,12 +428,10 @@ def detalleproducto(variable):
 
         try:
         #if session['usuario'] != None:
-            print('Lo que sea')  
             user = session['usuario']
             product = productoclickeado.id
             score = request.form.get('rate')
             comentario = request.form['comentario'] 
-            print(score, comentario, user, product)
 
             db = get_db()
 
@@ -461,6 +459,7 @@ def detalleproducto(variable):
 def prueba():
     """Función que permite salir de la sesión.
     """
+
     if session['confi'] == 'cart':
         return redirect(url_for('main.cart'))
     elif session['confi'] == 'wish':
@@ -469,14 +468,26 @@ def prueba():
         return render_template('thankyou.html')
     elif session['confi'] == 'comprafalla':
         return redirect(url_for('main.cart'))
+    elif session['confi'] == 'borrarcomentario':
+        return redirect(url_for('main.calificacion'))
 
 
 
-@main.route( '/calificaciones/borrar/<variable>', methods = ['GET','POST'])
+@main.route( '/calificaciones/borrarcomentario/<variable>', methods = ['GET','POST'])
 @login_required
 def borrarcomentario(variable):
 
+    comentario = request.args.get('type')
+    productID = variable
+
+    db = get_db()
+    try:
+        consulta = db.execute('delete from calificaciones where usuario = ? and producto = ? and comentarios = ?',(session['usuario'], productID, comentario)).fetchall()
+        db.commit()
+    except Exception as e:
+        print('Exception: {}'.format(e))
+    close_db()
+
+    session['confi'] = 'borrarcomentario'
     
-
-
     return redirect(url_for('main.prueba'))
