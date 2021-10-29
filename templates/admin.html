@@ -29,7 +29,8 @@
 											<span>{{ loop.index }}.{{ usuario[1] }} - {{ usuario[0] }}</span>
 											<span class="mdl-list__item-sub-title">{{ usuario[3] }}</span>
 										</span>
-										<a class="mdl-list__item-secondary-action" href="{{url_for('main.modificarpermiso',type=usuario[0], variable =usuario[3] )}}" class="btn btn-secondary">Actualizar Permiso</a>
+										<a class="mdl-list__item-secondary-action" href="{{url_for('main.modificarpermiso',type=usuario[0], variable =usuario[3] )}}" class="btn btn-secondary"><img class = "img-fluid" style= "width:40%;" src= "{{ url_for('static', filename='img/derusuario.png') }}" title = "Actualizar Permiso"></a>
+										<a class="mdl-list__item-secondary-action" href="{{url_for('main.borrarusuario',variable=usuario[0])}}" class="btn btn-secondary"><img class = "img-fluid" style= "width:40%;" src= "{{ url_for('static', filename='img/icodelete.png') }}" title = "Borrar Usuario"></a>
 									</div>
 									{% endfor %}
 									<li class="full-width divider-menu-h"></li>

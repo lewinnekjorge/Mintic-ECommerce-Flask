@@ -476,7 +476,8 @@ def prueba():
         return redirect(url_for('main.gestionusuario'))
     elif session['confi'] == 'borrarproducto':
         return redirect(url_for('main.inventory'))
-
+    elif session['confi'] == 'borrarusuario':
+        return redirect(url_for('main.gestionusuario'))
 
 @main.route( '/calificaciones/borrarcomentario/<variable>', methods = ['GET','POST'])
 @login_required
@@ -601,5 +602,23 @@ def borrarproducto(variable):
     close_db()
 
     session['confi'] = 'borrarproducto'
+    
+    return redirect(url_for('main.prueba'))
+
+@main.route( '/adminpage/borrarusuario/<variable>', methods = ['GET','POST'])
+@login_required
+def borrarusuario(variable):
+
+    usuario = variable
+
+    db = get_db()
+    try:
+        consulta = db.execute('delete from usuarios where usuario = ?',(usuario,)).fetchall()
+        db.commit()
+    except Exception as e:
+        print('Exception: {}'.format(e))
+    close_db()
+
+    session['confi'] = 'borrarusuario'
     
     return redirect(url_for('main.prueba'))
